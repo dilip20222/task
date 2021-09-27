@@ -15,7 +15,7 @@ export default function ErrorSnackbar(props) {
     <Stack spacing={2} sx={{ width: '100%' }}>
       <Snackbar open={props.notification} autoHideDuration={3000} onClose={props.handlerclose}>
         <Alert onClose={props.handlerclose} severity="error" sx={{ width: '100%' }}>
-       Enter Valid Creds !
+     Please Enter All Valid Input's !
         </Alert>
       </Snackbar>
     </Stack>

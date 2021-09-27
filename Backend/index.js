@@ -2,22 +2,26 @@ const express = require("express");
 const mongoose = require("mongoose");
 const connection = require("./server");
 const app = express();
-let cors = require("cors");
-require("dotenv").config();
+const cors = require("cors");
 const port = 3000;
-let jwt = require("jsonwebtoken");
-
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 app.listen();
+const bodyParser = require('body-parser')
+const multer = require('multer');
+
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 app.use(express.json());
 connection();
 app.use(
-  cors({
-    origin: "*",
-  })
+    cors({
+        origin: "*",
+    })
 );
 
 app.get("", (req, res) => {
-  res.send("Welcome");
+    res.send("Welcome");
 });
 
 
@@ -26,6 +30,6 @@ app.get("", (req, res) => {
 app.use("/api", require("./src/Route/Register"));
 app.use("/api", require("./src/Route/Login"));
 
-app.listen(port, function () {
-  console.log("Running RestHub on port " + port);
+app.listen(port, function() {
+    console.log("Backend Server Running on port " + port);
 });

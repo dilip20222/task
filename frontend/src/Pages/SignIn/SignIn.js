@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import useForm from "../../Cutomhook/Validationhook";
 import axios from "axios";
-import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import MuiAlert from "@mui/material/Alert";
 import validate from "../../Components/validate";
 import CustomizedSnackbars from "../../Alert/SuccessSnackbar";
+import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
+import SecurityIcon from '@mui/icons-material/Security';
+import AddReactionTwoToneIcon from '@mui/icons-material/AddReactionTwoTone';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorSnackbar from "../../Alert/Error";
-import { Redirect, useHistory } from "react-router";
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -18,7 +20,7 @@ const SignIn = (props) => {
   const [notification, setnotification] = React.useState(false);
   const { inputs, handleInputChange } = useForm({});
   const [errors, setErrors] = useState({});
-
+  
   const handleClose = (reason, event) => {
     if (reason === "clickaway") {
       return;
@@ -33,91 +35,89 @@ const SignIn = (props) => {
     const noErrors = Object.keys(validationErrors).length === 0;
     console.log("error", noErrors);
     setErrors(validationErrors);
-  
-    if (noErrors === false) {
-     axios
-     .post("http://localhost:3000/api/login" , { ...inputs })
-      .then((res) => {
-        const {token} = res.data
-        localStorage.setItem('token', token);
-        console.log("token>>>>>",token)
-        console.log("User : ", res);
+    try {
+      if (noErrors) {
+        axios
+        .post("http://localhost:3000/api/login", { ...inputs })
+        .then((res) => {
+          const {token} = res.data
+          localStorage.setItem('token', token);
+          console.log("User : ", res);
           console.log("Status :", res.status);
-          setOpen(true);
+          setOpen(true)
         });
-      console.log("Authenticated", inputs);
-    } 
-  else {
-      {
-        console.log("Problem submitting New Post", errors);
       }
-      setnotification(true);
-      console.log("errors try again", validationErrors);
+      else
+      {
+        setnotification(true)
+      }
+    } 
+    catch (error) {      
+      console.log("Problem submitting New Post", errors);
+      setnotification(true)
     }
-    event.preventDefault();
     console.log(inputs);
   };
-
-    return (
-
-
-      
-    <div className="conatiner">
-      <h1>
-        <VpnKeyIcon className="icons" />
-        {props.title}
-      </h1>
-
-      <div
-        className="form"
-        onSubmit={(e) => {
-          handleSubmit(e);
-        }}
-      >
-        <form action="">
-          <CustomizedSnackbars
-            handlerclose={handleClose}
-            open={open}
-            setOpen={setOpen}
+  
+  return (
+    
+    <div
+    className="form" style={{ borderRadius: "10px", background: "linear-gradient(#444 , #999 , #333)", width: "100%", height: "calc(100vh - 58px)", display: "flex", flexdirection: "column", alignitems: "center", justifyContent: "center" }}
+    onSubmit={(e) => {
+      handleSubmit(e);
+    }}
+    >
+      <form className="row g-3 p-4" style={{ display: "flex", flexDirection: 'column', alignItems: "center", marginRight: "calc(var(--bs-gutter-x) * 0.5)", margintop: "30px", width: "50%" }}>
+        <CustomizedSnackbars
+          handlerclose={handleClose}
+          open={open}
+          setOpen={setOpen}
+        />
+        <ErrorSnackbar
+          handlerclose={handleClose}
+          notification={notification}
+          setnotification={setnotification}
+        />
+        <hr />
+        <h1 className="text-center">
+          <AddReactionTwoToneIcon className="text-center icons mx-3" />
+          Login - Form
+        </h1>
+        <hr />
+        <div className="col-5">
+          <label htmlFor="inputAddress" className="form-label">
+            <MarkEmailReadIcon /> Email:
+          </label>
+          <input
+            className="form-control"
+            id="inputAddress"
+            placeholder="Enter Your Email Address"
+            type="email"
+            name="email"
+         
+            value={inputs.email}
+            onChange={handleInputChange}
           />
-          <ErrorSnackbar
-            handlerclose={handleClose}
-            notification={notification}
-            setnotification={setnotification}
+        </div>
+        <div className="col-5">
+          <label htmlFor="inputZip" className="form-label">
+            <SecurityIcon /> Password
+          </label>
+          <input
+            placeholder="Enter Password "
+            className="form-control"
+            id="inputCity"
+            type="password"
+            name="password"
+     
+            value={inputs.password}
+            onChange={handleInputChange}
           />
-          <div className="form-group">
-            <div className="label">
-              <label htmlFor="email">Email : </label>
-            </div>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              value={inputs.email}
-              onChange={handleInputChange}
-            />
-          </div>
-          {errors?.email && <p style={{ color: "red" }}>{errors?.email}</p>}
-          <div className="form-group">
-            <div className="label">
-              <label htmlFor="password">Password :</label>
-            </div>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              value={inputs.password}
-              onChange={handleInputChange}
-            />
-          </div>
-          {errors?.password && (
-            <p style={{ color: "red" }}>{errors?.password}</p>
-          )}
-          <div className="btns">
-            <button className="button">Login In</button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div className=" my-5 text-center">
+          <button className="btn btn-info"><CheckCircleIcon /> Sign In</button>
+        </div>
+      </form>
     </div>
   );
 };

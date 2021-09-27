@@ -30,13 +30,12 @@ const Home = () => {
             <Router>
                 <Navbar />
                 <Switch>
-                    <Route exact path="/SignIn">
-                        <SignIn title="Registration" />
+                    <Route exact path="/SignIn" component={SignIn}>
                     </Route>
-                    <Route exact path="/SignUp">
-                        <SignUp title="Registration" />
+                    <Route exact path="/SignUp" component={SignUp}>
                     </Route>
-                </Switch>
+                    <Route exact path="/dashboard" component={Dashboard}></Route>
+                </Switch>/
             </Router>
         </>
     )

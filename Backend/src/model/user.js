@@ -1,42 +1,47 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-    username : {
-        type:String,
-        required:true
+    username: {
+        type: String,
+        required: true
     },
-    fullname : {
-        type:String,
-        required:true,
+    fullname: {
+        type: String,
+        required: true,
     },
     email: {
-        type:String,
-        required:true,
-        unique:true
+        type: String,
+        required: true,
+        unique: true
     },
     gender: {
-        type:String,
+        type: String,
     },
-    date:{
-        type: String, default: Date
+    date: {
+        type: String,
+        default: Date
     },
     phone: {
-        type:Number,
-        required:true,
+        type: String,
     },
-    password:{
-        type:String,
-        required:true
+    password: {
+        type: String,
+        required: true
     },
-    confirmpassword : {
-        type:String,
-        required:true
+    confirmpassword: {
+        type: String,
+        required: true
     },
-    token:{
-        type:String
+    file: {
+        data: Buffer,
+        contentType: String
+    },
+    // images: {
+    //     type: String,
+    // },
+    token: {
+        type: String
     }
 })
 
-module.exports = mongoose.model('Auth' , userSchema);
-
-// Fields: username, fullname, email, gender, date of birth, phone, profile image, password, and confirm password
+module.exports = mongoose.model('Auth', userSchema);

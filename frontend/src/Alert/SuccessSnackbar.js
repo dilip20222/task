@@ -15,7 +15,7 @@ export default function CustomizedSnackbars(props) {
     <Stack spacing={2} sx={{ width: '100%' }}>
       <Snackbar open={props.open} autoHideDuration={3000} onClose={props.handlerclose}>
         <Alert onClose={props.handlerclose} severity="success" sx={{ width: '100%' }}>
-          Successfull !
+        Successfull ~ Welcome 
         </Alert>
       </Snackbar>
     </Stack>
