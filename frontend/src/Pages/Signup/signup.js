@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from 'react-router-dom'
 import useForm from "../../Cutomhook/Validationhook";
 import axios from "axios";
 import MuiAlert from "@mui/material/Alert";
@@ -28,16 +29,61 @@ export const SignUp = (props) => {
   const [notification, setnotification] = useState(false);
 
   const [errors, setErrors] = useState({});
+ 
 
-
-  const handleSubmit = (event) => {
+  const handleSubmit = (event ,e) => {
     const validationErrors = validate(inputs);
     const noErrors = Object.keys(validationErrors).length === 0;
     setErrors(validationErrors);
+    // let formData = new FormData();
+    // Object.keys(e).forEach((inputs) => {
+    //   console.log(inputs, e[inputs]);
+    //   formData.append(inputs, e[inputs]);
+    // });
+    // const formData = new FormData();
+    // Object.keys(event).forEach((fieldName) => {
+    //   console.log(fieldName, event[fieldName]);
+    //   formData.append(fieldName, event[fieldName]);
+    // });
+   //formdata object
+
+    // formData.append(inputs, inputs);   //append the values with key, value pair
+    // formData.append('email', 20);
+    // formData.append('filess', inputs.files[0]);
+  // console.log(inputs.filess)
+    
+    // const config = {     
+    //     headers: { 'content-type': 'multipart/form-data' }
+    // }
+    
+    // const options = {
+    //   method: 'POST',
+    //   body: formData,
+    // };
+
+
+   
 
     if (noErrors) {
+
+     let formData = new FormData();
+       // const formData = new FormData();
+       formData.append('username', inputs.username);
+       formData.append('fullname', inputs.fullname);
+       formData.append('email', inputs.email);
+    formData.append('date', inputs.date);
+    formData.append('gender', inputs.gender);
+    formData.append('phone', inputs.phone);
+    formData.append('confirmpassword', inputs.confirmpassword);
+    formData.append('password', inputs.password);
+    formData.append('filess', inputs.filess);
+    // console.log({ formData });
+    // Object.keys(e).forEach((inputs) => {
+    //   console.log(inputs, e[inputs]);
+    //   formData.append(inputs, e[inputs]);
+    // });
       axios
-        .post("http://localhost:3000/api/register", { ...inputs })
+        .post("http://localhost:3000/api/register",formData,{...inputs})
         .then((res) => {
           const { token } = res.data;
           localStorage.setItem("token", token);
@@ -45,9 +91,10 @@ export const SignUp = (props) => {
           setOpen(true);
         });
       console.log("Authenticated", inputs);
-    } else {
+    } 
+    else {
+      setnotification(true);
       {
-        setnotification(true);
         console.log(errors, "Not Found");
       }
       console.log("errors try again", validationErrors);
@@ -55,6 +102,7 @@ export const SignUp = (props) => {
     event.preventDefault();
 
     console.log(inputs);
+
   };
 
   const handleClose = (reason, event) => {
@@ -64,16 +112,26 @@ export const SignUp = (props) => {
     setOpen(false);
     setnotification(false);
   };
+
+  const head = {
+        borderRadius: "10px",
+        background: "linear-gradient(#444 , White , #333)",
+         width: "100%" 
+  }
+
+  
   return (
     <>
       <div
-        className="form" style={{ borderRadius: "10px", background: "linear-gradient(#444 , White , #333)", width: "100%", height: "calc(100vh - 33px)" }}
-        onSubmit={(e) => {
-          handleSubmit(e);
-        }}
+        className="form" style={head}
+    
+    onSubmit={handleSubmit}
+        // onSubmit={(e) => {
+        //   handleSubmit(e);
+        // }}
 
       >
-        <form encType="multipart/form-data" method="post" className="row g-4 p-5" style={{ marginRight: "calc(var(--bs-gutter-x) * 0.5)" }}>
+        <form encType="multipart/form-data" className="row g-4 p-5" style={{ marginRight: "calc(var(--bs-gutter-x) * 0.5)"  }}>
           <hr />
           <h1 className='text-center'>
             <AddReactionTwoToneIcon className="icons mx-3" />
@@ -86,7 +144,7 @@ export const SignUp = (props) => {
             setOpen={setOpen}
           />
           <h4>
-            <NewReleasesIcon /> Username , Fullname  , Contact , Email and Password is mandotry to fill !
+            <NewReleasesIcon /> Username , Fullname  , Contact , Email and Password is mandatory to fill !
           </h4>
 
           <ErrorSnackbar
@@ -116,7 +174,7 @@ export const SignUp = (props) => {
             )} */}
           <div className="col-md-6">
             <label htmlFor="inputPassword4" className="form-label">
-              <ContactsIcon /> FullName
+              <ContactsIcon /> FullName :-
             </label>
             <input
               className="form-control"
@@ -131,7 +189,7 @@ export const SignUp = (props) => {
           </div>
           <div className="col-3">
             <label htmlFor="inputAddress" className="form-label">
-              <MarkEmailReadIcon /> Email:
+              <MarkEmailReadIcon /> Email :-
             </label>
             <input
               className="form-control"
@@ -146,7 +204,7 @@ export const SignUp = (props) => {
           </div>
           <div className="col-3">
             <label htmlFor="inputAddress2" className="form-label">
-              <WcIcon /> Gender
+              <WcIcon /> Gender :-
             </label>
             <input
               className="form-control"
@@ -161,7 +219,7 @@ export const SignUp = (props) => {
           </div>
           <div className="col-md-3">
             <label htmlFor="inputCity" className="form-label">
-              <EventAvailableIcon />  Date :
+              <EventAvailableIcon /> Date :-
             </label>
             <input
               className="form-control"
@@ -174,7 +232,7 @@ export const SignUp = (props) => {
             />
           </div>
 
-          <div className="col-md-2">
+          <div className="col-md-3">
             <label htmlFor="inputZip" className="form-label">
               <ContactPhoneIcon /> Contact No.: -
             </label>
@@ -193,7 +251,7 @@ export const SignUp = (props) => {
           </div>
           <div className="col-md-3">
             <label htmlFor="inputZip" className="form-label">
-              <SecurityIcon /> Password
+              <SecurityIcon /> Password :-
             </label>
             <input
               placeholder="Enter Password"
@@ -208,33 +266,32 @@ export const SignUp = (props) => {
           </div>
           <div className="col-md-3">
             <label htmlFor="inputZip" className="form-label">
-              <LockIcon />  ConfirmPassword
+              <LockIcon />  confirmpassword :-
             </label>
             <input
               className="form-control"
               id="inputCity5"
               type="password"
               name="confirmpassword"
-
               value={inputs.confirmpassword}
               onChange={handleInputChange}
             />
           </div>
           <div className="col-md-3">
-            <label htmlFor="file" className="form-label">
-              <LockIcon />Image
+            <label htmlFor="filess" className="form-label">
+              <LockIcon />Image :-
             </label>
             <input
               className="form-control"
-              id="inputCity6"
+              id="filess"
               type="file"
-              name="file"
-              value={inputs.file}
+              name="filess"
+              value={inputs.filess}
               onChange={handleInputChange}
             />
           </div>
           <div className="text-center my-5">
-            <button className="btn btn-info"><CheckCircleIcon />Sign Up</button>
+            <button className="btn btn-success"><CheckCircleIcon />Sign Up</button>
           </div>
         </form>
       </div>

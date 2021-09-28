@@ -1,4 +1,5 @@
 import React, {  useState } from "react";
+import { useHistory } from "react-router";
 import useForm from "../../Cutomhook/Validationhook";
 import axios from "axios";
 import MuiAlert from "@mui/material/Alert";
@@ -15,11 +16,14 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 
 const SignIn = (props) => {
-
+  
   const [open, setOpen] = React.useState(false);
   const [notification, setnotification] = React.useState(false);
   const { inputs, handleInputChange } = useForm({});
   const [errors, setErrors] = useState({});
+
+  const history = useHistory();
+
   
   const handleClose = (reason, event) => {
     if (reason === "clickaway") {
@@ -44,6 +48,7 @@ const SignIn = (props) => {
           localStorage.setItem('token', token);
           console.log("User : ", res);
           console.log("Status :", res.status);
+          history.push('/dashboard') ;
           setOpen(true)
         });
       }
@@ -58,16 +63,36 @@ const SignIn = (props) => {
     }
     console.log(inputs);
   };
+
+  const head = {
+     borderRadius: "10px",
+     background: "linear-gradient(#444 , #999 , #333)", 
+     width: "100%", 
+     height: "calc(100vh - 58px)",
+     display: "flex",
+      flexdirection: "column", 
+      alignitems: "center", 
+      justifyContent: "center" 
+  }
+
+  const formhead = {
+     display: "flex",
+      flexDirection: 'column',
+       alignItems: "center",
+        marginRight: "calc(var(--bs-gutter-x) * 0.5)", 
+        margintop: "30px", 
+        width: "50%" 
+  }
   
   return (
     
     <div
-    className="form" style={{ borderRadius: "10px", background: "linear-gradient(#444 , #999 , #333)", width: "100%", height: "calc(100vh - 58px)", display: "flex", flexdirection: "column", alignitems: "center", justifyContent: "center" }}
+    className="form" style={head}
     onSubmit={(e) => {
       handleSubmit(e);
     }}
     >
-      <form className="row g-3 p-4" style={{ display: "flex", flexDirection: 'column', alignItems: "center", marginRight: "calc(var(--bs-gutter-x) * 0.5)", margintop: "30px", width: "50%" }}>
+      <form className="row g-3 p-4" style={formhead}>
         <CustomizedSnackbars
           handlerclose={handleClose}
           open={open}

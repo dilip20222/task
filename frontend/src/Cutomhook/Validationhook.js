@@ -3,21 +3,23 @@ import validate from "../Components/validate";
 
 const useForm = (initialValues) => {
   const [inputs, setInputs] = useState({ });
-
+  
 
   const [errors, setErrors] = useState({});
-  const handleSubmit = (event) => {
 
-    const validationErrors = validate(inputs);
-    const noErrors = Object.keys(validationErrors).length === 0;
-    setErrors(validationErrors);
-    if (noErrors) {
-      console.log("Authenticated", inputs);
-    } else {
-      console.log("errors try again", validationErrors);
-    }
-    event.preventDefault();
-  };
+  // const handleSubmit = (event) => {
+
+  //   const validationErrors = validate(inputs);
+  //   const noErrors = Object.keys(validationErrors).length === 0;
+  //   setErrors(validationErrors);
+  //   if (noErrors ) {
+  //     console.log("Authenticated", inputs);
+      
+  //   } else {
+  //     console.log("errors try again", validationErrors);
+  //   }
+  //   event.preventDefault();
+  // };
 
   const handleInputChange = (event) => {
     event.persist();
@@ -28,10 +30,11 @@ const useForm = (initialValues) => {
   };
 
   return {
-    handleSubmit,
+    // handleSubmit,
     handleInputChange,
     inputs,
-    errors,
+    setInputs,
+    errors
   };
 };
 

@@ -32,9 +32,9 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    file: {
+    filess: {
         data: Buffer,
-        contentType: String
+        type: String
     },
     // images: {
     //     type: String,
