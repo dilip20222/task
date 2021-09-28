@@ -1,7 +1,4 @@
-import React, { useState } from "react";
 import { useHistory } from 'react-router-dom'
-import useForm from "../../Cutomhook/Validationhook";
-import axios from "axios";
 import MuiAlert from "@mui/material/Alert";
 import CustomizedSnackbars from "../../Alert/SuccessSnackbar";
 import ErrorSnackbar from "../../Alert/Error";
@@ -18,127 +15,71 @@ import NewReleasesIcon from '@mui/icons-material/NewReleases';
 import AddReactionTwoToneIcon from '@mui/icons-material/AddReactionTwoTone';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
-const Alert = React.forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
 
+import React, { useState } from "react";
+import axios from "axios";
+import useForm from "../../Cutomhook/Validationhook";
+const Signup = (props) => {
 
-export const SignUp = (props) => {
-  const { inputs, handleInputChange } = useForm({});
   const [open, setOpen] = useState(false);
-  const [notification, setnotification] = useState(false);
-
-  const [errors, setErrors] = useState({});
- 
-
-  const handleSubmit = (event ,e) => {
-    const validationErrors = validate(inputs);
-    const noErrors = Object.keys(validationErrors).length === 0;
-    setErrors(validationErrors);
-    // let formData = new FormData();
-    // Object.keys(e).forEach((inputs) => {
-    //   console.log(inputs, e[inputs]);
-    //   formData.append(inputs, e[inputs]);
-    // });
-    // const formData = new FormData();
-    // Object.keys(event).forEach((fieldName) => {
-    //   console.log(fieldName, event[fieldName]);
-    //   formData.append(fieldName, event[fieldName]);
-    // });
-   //formdata object
-
-    // formData.append(inputs, inputs);   //append the values with key, value pair
-    // formData.append('email', 20);
-    // formData.append('filess', inputs.files[0]);
-  // console.log(inputs.filess)
-    
-    // const config = {     
-    //     headers: { 'content-type': 'multipart/form-data' }
-    // }
-    
-    // const options = {
-    //   method: 'POST',
-    //   body: formData,
-    // };
-
-
-   
-
-    if (noErrors) {
-
-     let formData = new FormData();
-       // const formData = new FormData();
-       formData.append('username', inputs.username);
-       formData.append('fullname', inputs.fullname);
-       formData.append('email', inputs.email);
-    formData.append('date', inputs.date);
-    formData.append('gender', inputs.gender);
-    formData.append('phone', inputs.phone);
-    formData.append('confirmpassword', inputs.confirmpassword);
-    formData.append('password', inputs.password);
-    formData.append('filess', inputs.filess);
-    // console.log({ formData });
-    // Object.keys(e).forEach((inputs) => {
-    //   console.log(inputs, e[inputs]);
-    //   formData.append(inputs, e[inputs]);
-    // });
-      axios
-        .post("http://localhost:3000/api/register",formData,{...inputs})
-        .then((res) => {
-          const { token } = res.data;
-          localStorage.setItem("token", token);
-          console.log(token);
-          setOpen(true);
-        });
-      console.log("Authenticated", inputs);
-    } 
-    else {
-      setnotification(true);
-      {
-        console.log(errors, "Not Found");
-      }
-      console.log("errors try again", validationErrors);
-    }
-    event.preventDefault();
-
-    console.log(inputs);
-
-  };
-
+    const [notification, setnotification] = useState(false);
   const handleClose = (reason, event) => {
-    if (reason === "clickaway") {
-      return;
+        if (reason === "clickaway") {
+          return;
+        }
+        setOpen(false);
+        setnotification(false);
+      };
+    
+
+  const [file, setFile] = useState("");
+  const [input, setInput] = useState({ email: "" });
+  const { inputs, handleInputChange } = useForm({});
+  
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const formData = new FormData();
+
+      // const formData = new FormData();
+      formData.append("username", inputs.username);
+      formData.append("fullname", inputs.fullname);
+      formData.append("email", inputs.email);
+      formData.append("date", inputs.date);
+      formData.append("gender", inputs.gender);
+      formData.append("phone", inputs.phone);
+      formData.append("confirmpassword", inputs.confirmpassword);
+      formData.append("password", inputs.password);
+      formData.append("file", file, file.name);
+      // formData.append("desc", description);
+
+      let res = await axios.post(
+        "http://localhost:3000/api/register",
+        formData
+      );
+      // setError(false);
+      // handleClose();
+    } catch (error) {
+      // setError(true);
+      console.error(error);
     }
-    setOpen(false);
-    setnotification(false);
   };
 
-  const head = {
-        borderRadius: "10px",
-        background: "linear-gradient(#444 , White , #333)",
-         width: "100%" 
+  const head = ()=>{
+
   }
 
-  
   return (
-    <>
-      <div
-        className="form" style={head}
-    
-    onSubmit={handleSubmit}
-        // onSubmit={(e) => {
-        //   handleSubmit(e);
-        // }}
-
-      >
-        <form encType="multipart/form-data" className="row g-4 p-5" style={{ marginRight: "calc(var(--bs-gutter-x) * 0.5)"  }}>
-          <hr />
-          <h1 className='text-center'>
+    <form onSubmit={onSubmit} className="row">
+      <div>
+      <h1 className='text-center'>
             <AddReactionTwoToneIcon className="icons mx-3" />
             Registration - Form
           </h1>
-          <hr />
-          <CustomizedSnackbars
+           <hr />
+           <CustomizedSnackbars
             handlerclose={handleClose}
             open={open}
             setOpen={setOpen}
@@ -277,24 +218,19 @@ export const SignUp = (props) => {
               onChange={handleInputChange}
             />
           </div>
-          <div className="col-md-3">
-            <label htmlFor="filess" className="form-label">
-              <LockIcon />Image :-
-            </label>
-            <input
-              className="form-control"
-              id="filess"
-              type="file"
-              name="filess"
-              value={inputs.filess}
-              onChange={handleInputChange}
-            />
+          <div className="image">
+<label htmlFor="file" className="file">Image</label>
+        <input
+          type="file"
+          onChange={(e) => setFile(e.target.files[0])}
+          className="custom-file-input"
+          id="file"
+          />
           </div>
-          <div className="text-center my-5">
-            <button className="btn btn-success"><CheckCircleIcon />Sign Up</button>
-          </div>
-        </form>
+        <button onSubmit={onSubmit}>sub</button>
       </div>
-    </>
+    </form>
   );
 };
+
+export default Signup;

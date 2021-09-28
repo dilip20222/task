@@ -1,7 +1,7 @@
 import React from 'react'
 import './Home.css'
 import SignIn from '../SignIn/SignIn';
-import { SignUp } from '../Signup/signup';
+import SignUp from '../Signup/signup';
 import {
     BrowserRouter as Router,
     Switch,

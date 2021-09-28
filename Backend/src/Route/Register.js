@@ -30,14 +30,12 @@ router.post("/register",upload.single('file') ,  async(req, res, next) => {
         
         // Get user input
         const {username, fullname, gender, date, phone, email, password, confirmpassword} = req.body;
-
         // Validate user input
-        const filess = req.file.filename;
-        
+        const file = req.file.filename;
         if (!(username && fullname && phone && email && password && confirmpassword)) {
             res.status(400).send("All input is required");
         }
-
+console.log("filepath",req.file.filename,req.file.path)
         // check if user already exist
         // Validate if user exist in our database
         const oldUser = await Auth.findOne({email});
@@ -51,9 +49,9 @@ router.post("/register",upload.single('file') ,  async(req, res, next) => {
 
         // Create user in our database
         // console.log('file', file);
-
+        const url = req.protocol + '://' + req.get('host')
         const user = await Auth.create({
-            filess,
+            file:url+'/uploads/'+req.file.originalname,
             username,
             fullname,
             email: email.toLowerCase(),
@@ -73,8 +71,9 @@ router.post("/register",upload.single('file') ,  async(req, res, next) => {
 
         user.token = token;
         console.log("User Token", token)
-      console.log("File original Name"  , req.file.filename)
+  //    console.log("File original Name"  , req.file.filename)
         res.status(200).json(user)
+        
     } 
     catch (err) {
         res.status(404).json("Not valid")
