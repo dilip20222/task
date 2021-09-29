@@ -7,24 +7,23 @@ import {
     Switch,
     Route
 } from "react-router-dom";
-import { Navbar } from '../../Components/Navbar/Navbar';
-// import { Demo } from '../../Components/Demo';
 import { Redirect } from 'react-router';
 import Dashboard from '../Dashboard/Dashboard'
 import test from '../../Components/test';
+import Navbar from '../../Components/Navbar/Navbar'
 
 const PrivateRoute = (props) => {
     console.log('PRIVATE ROUTE: ', props.path);
-    return localStorage.getItem('tokens') ? (
+    return localStorage.getItem('token') ? (
         <Route {...props} />
     ) : (
-        <Redirect to='/' />
+        <Redirect to='/SignIn' />
     );
 };
 
 
 
-const Home = () => {
+const Home = (props) => {
     return (
         <>
             <Router>
@@ -34,8 +33,10 @@ const Home = () => {
                     </Route>
                     <Route exact path="/SignUp" component={SignUp}>
                     </Route>
-                    <Route exact path="/dashboard" component={Dashboard}></Route>
-                </Switch>/
+                    <PrivateRoute
+                     exact path="/dashboard" component={Dashboard}>
+                     </PrivateRoute>
+                </Switch>
             </Router>
         </>
     )

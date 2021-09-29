@@ -36,6 +36,7 @@ const Signup = (props) => {
   const [input, setInput] = useState({ email: "" });
   const { inputs, handleInputChange } = useForm({});
   
+  const history = useHistory()
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -53,26 +54,42 @@ const Signup = (props) => {
       formData.append("confirmpassword", inputs.confirmpassword);
       formData.append("password", inputs.password);
       formData.append("file", file, file.name);
-      // formData.append("desc", description);
 
       let res = await axios.post(
         "http://localhost:3000/api/register",
         formData
       );
-      // setError(false);
+      const {token} = res.data
+      localStorage.setItem('token' , token);
+      
+      if(token){
+        history.push('/dashboard');
+      }
+
+      // {token ? history.push("/") : null}
+      // token ? history.push('/SignIn') :'/Signup';
+      setOpen(true);
+      console.log("Response" , res)
       // handleClose();
     } catch (error) {
-      // setError(true);
+      setnotification(true);
       console.error(error);
     }
   };
 
-  const head = ()=>{
-
-  }
+  const head = {
+    borderRadius: "10px",
+    background: "linear-gradient(#444 , #999 , #333)", 
+    width: "100%", 
+    height: "calc(100vh - 58px)",
+    display: "flex",
+     flexdirection: "column", 
+     alignitems: "center", 
+     justifyContent: "center" 
+ }
 
   return (
-    <form onSubmit={onSubmit} className="row">
+    <form onSubmit={onSubmit} className="p-4" style={head}>
       <div>
       <h1 className='text-center'>
             <AddReactionTwoToneIcon className="icons mx-3" />
@@ -93,6 +110,9 @@ const Signup = (props) => {
             notification={notification}
             setnotification={setnotification}
           />
+          <div className="row g-3 p-4">
+
+       
 
           <div className="col-md-6">
             <label htmlFor="inputEmail4" className="form-label">
@@ -110,9 +130,7 @@ const Signup = (props) => {
             />
 
           </div>
-          {/* {errors?.username && (
-              <p style={{ color: "red" }}>{errors?.username}</p>
-            )} */}
+        
           <div className="col-md-6">
             <label htmlFor="inputPassword4" className="form-label">
               <ContactsIcon /> FullName :-
@@ -218,16 +236,19 @@ const Signup = (props) => {
               onChange={handleInputChange}
             />
           </div>
-          <div className="image">
-<label htmlFor="file" className="file">Image</label>
+          <div className="col-md-3">
+<label htmlFor="file" className="form-label">Image : -</label>
         <input
           type="file"
           onChange={(e) => setFile(e.target.files[0])}
-          className="custom-file-input"
+          className="form-control"
           id="file"
           />
           </div>
-        <button onSubmit={onSubmit}>sub</button>
+          <div className="btn">
+        <button className="btn btn-primary" onSubmit={onSubmit}>Sign Up</button>
+          </div>
+      </div>
       </div>
     </form>
   );

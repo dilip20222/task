@@ -52,10 +52,7 @@ const SignIn = (props) => {
           setOpen(true)
         });
       }
-      else
-      {
-        setnotification(true)
-      }
+      setnotification(true)
     } 
     catch (error) {      
       console.log("Problem submitting New Post", errors);
