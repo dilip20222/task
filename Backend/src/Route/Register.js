@@ -44,7 +44,8 @@ router.post("/register", upload.single("file"), async (req, res, next) => {
     ) {
       res.status(400).send("All input is required");
     }
-    console.log("filepath", req.file.filename, req.file.path);
+    // console.log("filepath", req.file.filename, req.file.path);
+    console.log("filepath", req.file.filename);
 
     // check if user already exist
     // Validate if user exist in our database
@@ -61,7 +62,8 @@ router.post("/register", upload.single("file"), async (req, res, next) => {
     // console.log('file', file);
     const url = req.protocol + "://" + req.get("host");
     const user = await Auth.create({
-      file: url + "/uploads/" + req.file.originalname,
+      // file: url + "/uploads/" + req.file.originalname,
+      file: req.file.originalname,
       username,
       fullname,
       email: email.toLowerCase(),
@@ -74,7 +76,7 @@ router.post("/register", upload.single("file"), async (req, res, next) => {
 
     // Create token
     const token = jwt.sign(
-      { user_id: user._id, email },
+      { _id: user._id, email },
       process.env.TOKEN_KEY,
       {
         expiresIn: "2h",

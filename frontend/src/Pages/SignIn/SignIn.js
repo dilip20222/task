@@ -10,6 +10,7 @@ import SecurityIcon from '@mui/icons-material/Security';
 import AddReactionTwoToneIcon from '@mui/icons-material/AddReactionTwoTone';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorSnackbar from "../../Alert/Error";
+import { Nav } from "../../Components/Navbar/Nav";
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -82,7 +83,8 @@ const SignIn = (props) => {
   }
   
   return (
-    
+    <>
+    <Nav/>
     <div
     className="form" style={head}
     onSubmit={(e) => {
@@ -141,6 +143,7 @@ const SignIn = (props) => {
         </div>
       </form>
     </div>
+    </>
   );
 };
 

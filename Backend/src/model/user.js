@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
+    // _id:{String} ,
     username: {
         type: String,
         required: true
@@ -36,6 +37,7 @@ const userSchema = new mongoose.Schema({
         data: Buffer,
         type: String
     },
+
     // images: {
     //     type: String,
     // },

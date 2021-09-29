@@ -20,7 +20,7 @@ app.use(
     })
 );
 
-app.get("", (req, res) => {
+app.get("/", (req, res) => {
     res.send("Welcome");
 });
 
@@ -29,6 +29,8 @@ app.get("", (req, res) => {
 
 app.use("/api", require("./src/Route/Register"));
 app.use("/api", require("./src/Route/Login"));
+app.use("/api", require("./src/Route/profile"));
+app.use('/uploads', express.static('uploads'));
 
 app.listen(port, function() {
     console.log("Backend Server Running on port " + port);

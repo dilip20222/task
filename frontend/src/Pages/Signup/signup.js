@@ -19,6 +19,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import React, { useState } from "react";
 import axios from "axios";
 import useForm from "../../Cutomhook/Validationhook";
+import { Nav } from '../../Components/Navbar/Nav';
 const Signup = (props) => {
 
   const [open, setOpen] = useState(false);
@@ -89,6 +90,8 @@ const Signup = (props) => {
  }
 
   return (
+    <>
+    <Nav/>
     <form onSubmit={onSubmit} className="p-4" style={head}>
       <div>
       <h1 className='text-center'>
@@ -251,6 +254,7 @@ const Signup = (props) => {
       </div>
       </div>
     </form>
+    </>
   );
 };
 

@@ -15,7 +15,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import Logout from '../logout';
+import Logout from '../logout/logout';
 import { Link } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
@@ -227,12 +227,6 @@ export default function Navbar() {
             </IconButton>
           </Box>
       <Logout/>
-      <div className="p-2">
-     <button className="btn btn-info"><Link to="/SignIn"> SignIn</Link></button>
-      </div>
-      <div className="p-2">
-     <button className="btn btn-info"><Link to="/SignUp"> SignUp</Link></button>
-      </div>
         </Toolbar>
       </AppBar>
       {renderMobileMenu}

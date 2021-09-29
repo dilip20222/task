@@ -19,7 +19,9 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
  import { Button, CardActionArea, CardActions } from '@mui/material';
-import { logout } from '../../Components/logout';
+import Logout from '../../Components/logout/logout';
+import Navbar from '../../Components/Navbar/Navbar';
+import { Profile } from '../../Components/profile/Profile';
 
  const flex = {
      display:'flex'
@@ -165,105 +167,8 @@ export default function Dashboard() {
 
   return (
       <>
-
-    <div className="maincard" style={flex}>
-    <Card sx={{ maxWidth: 340 }} className="p-5">
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          height="140"
-          image="https://images.unsplash.com/photo-1632800617933-712949cc4d42?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1335&q=80"
-          alt="green iguana"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Lizard
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
-      </CardActions>
-    </Card>
-    <Card sx={{ maxWidth: 340 }} className="p-5">
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          height="140"
-          image="https://images.unsplash.com/photo-1632800617933-712949cc4d42?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1335&q=80"
-          alt="green iguana"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Lizard
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
-      </CardActions>
-    </Card>
-    <Card sx={{ maxWidth: 340 }} className="p-5">
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          height="140"
-          image="https://images.unsplash.com/photo-1632800617933-712949cc4d42?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1335&q=80"
-          alt="green iguana"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Lizard
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
-      </CardActions>
-    </Card>
-    <Card sx={{ maxWidth: 340 }} className="p-5">
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          height="140"
-          image="https://images.unsplash.com/photo-1632800617933-712949cc4d42?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1335&q=80"
-          alt="green iguana"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Lizard
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
-      </CardActions>
-    </Card>
-    </div>
+     <Navbar/>
+     <Profile/>
     </>
   );
 }
