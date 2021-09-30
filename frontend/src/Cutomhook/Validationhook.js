@@ -1,16 +1,7 @@
 import { useState } from "react";
 
 const useForm = (initialValues) => {
-  const [inputs, setInputs] = useState({
-    // username: "ronny123",
-    // fullname : "raw ronny",
-    // email : "roy@gmail.com",
-    // date:"23/2/2001",
-    // password : "123456",
-    // confirmpassword : "123456",
-    // phone :"123456789",
-    // gender : "Male"
-     });
+  const [inputs, setInputs] = useState({});
   
 
   const [errors, setErrors] = useState({});

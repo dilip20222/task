@@ -8,18 +8,6 @@ let jwt = require('jsonwebtoken');
 
 const auth = require('../middleware/auth')
 
-
-router.get('/:id', auth, async (req, res,next) => {
-  const userid = req.params.id
-    try { 
-        const result = await Auths.findById(userid);
-        res.json(result)
-        console.log("result >>." ,result);
-      } catch (error) {
-        console.log('data not found', error);
-      }
-    });
-
 router.post("/login", async(req, res) => {
     try {
         // Get user input

@@ -4,15 +4,15 @@ const userSchema = new mongoose.Schema({
     // _id:{String} ,
     username: {
         type: String,
-        required: true
+        // required: true
     },
     fullname: {
         type: String,
-        required: true,
+        // required: true,
     },
     email: {
         type: String,
-        required: true,
+        // required: true,
         unique: true
     },
     gender: {
@@ -27,11 +27,11 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true
+        // required: true
     },
     confirmpassword: {
         type: String,
-        required: true
+        // required: true
     },
     file: {
         data: Buffer,

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useHistory } from 'react-router';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -17,6 +18,8 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import Logout from '../logout/logout';
 import { Link } from 'react-router-dom';
+import { Profile } from '../profile/Profile';
+import Update from '../../Pages/Update/Update';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -58,25 +61,33 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+
+
 export default function Navbar() {
+  const history = useHistory();
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
+  
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
+  
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
+  
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
-
+  
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
   };
+  
+  const updatehandler = ()=>{
+    history.push('/update')
+  }
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
@@ -99,8 +110,13 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <Profile/>
+      </MenuItem>
+      <div className="text-center">
+      <button className="btn btn-info p-1 my-1" onClick={updatehandler}>Update Account</button>
+      {/* <button className="btn btn-warning p-1 mx-3">Detele Account</button> */}
+      </div>
     </Menu>
   );
 
@@ -121,26 +137,6 @@ export default function Navbar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           size="large"
@@ -226,7 +222,9 @@ export default function Navbar() {
               <MoreIcon />
             </IconButton>
           </Box>
+          <div className="p-1 mx-2">
       <Logout/>
+          </div>
         </Toolbar>
       </AppBar>
       {renderMobileMenu}

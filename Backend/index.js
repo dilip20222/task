@@ -10,8 +10,6 @@ app.listen();
 const bodyParser = require('body-parser')
 const multer = require('multer');
 
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
 app.use(express.json());
 connection();
 app.use(
@@ -30,6 +28,7 @@ app.get("/", (req, res) => {
 app.use("/api", require("./src/Route/Register"));
 app.use("/api", require("./src/Route/Login"));
 app.use("/api", require("./src/Route/profile"));
+app.use("/api" , require('./src/Route/updateuser'))
 app.use('/uploads', express.static('uploads'));
 
 app.listen(port, function() {

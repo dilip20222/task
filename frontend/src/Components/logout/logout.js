@@ -1,6 +1,7 @@
 import { useHistory } from 'react-router';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { useState } from 'react';
+import LogoutIcon from '@mui/icons-material/Logout';;
 
 function Logout() {
     const [user, setUser] = useState(
@@ -18,7 +19,8 @@ function Logout() {
         onClick={() => {
           logoutHandler();
         }}
-      >Log out</button>
+      ><LogoutIcon/>
+      </button>
     </div>
   );
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const head = {
-    background: "linear-gradient(#444 , #999 , #333)", 
+    background: "#444", 
     width: "100%", 
     display: "flex",
      flexdirection: "column",
@@ -17,7 +17,7 @@ const head = {
  }
  const li = {
     textDecoration:'none',
-    color:'crimson',
+    color:'white',
     fontSize:'21px',
     padding :'4px 2px 4px 2px',
  }

@@ -118,7 +118,7 @@ const SignIn = (props) => {
             placeholder="Enter Your Email Address"
             type="email"
             name="email"
-         
+         required={true}
             value={inputs.email}
             onChange={handleInputChange}
           />
@@ -133,7 +133,7 @@ const SignIn = (props) => {
             id="inputCity"
             type="password"
             name="password"
-     
+            required={true}
             value={inputs.password}
             onChange={handleInputChange}
           />

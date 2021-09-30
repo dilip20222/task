@@ -14,7 +14,11 @@ import validate from "../../Components/validate";
 import NewReleasesIcon from '@mui/icons-material/NewReleases';
 import AddReactionTwoToneIcon from '@mui/icons-material/AddReactionTwoTone';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 
 import React, { useState } from "react";
 import axios from "axios";
@@ -23,6 +27,8 @@ import { Nav } from '../../Components/Navbar/Nav';
 const Signup = (props) => {
 
   const [open, setOpen] = useState(false);
+  const [errors, setErrors] = useState({});
+
     const [notification, setnotification] = useState(false);
   const handleClose = (reason, event) => {
         if (reason === "clickaway") {
@@ -79,7 +85,6 @@ const Signup = (props) => {
   };
 
   const head = {
-    borderRadius: "10px",
     background: "linear-gradient(#444 , #999 , #333)", 
     width: "100%", 
     height: "calc(100vh - 58px)",
@@ -88,6 +93,8 @@ const Signup = (props) => {
      alignitems: "center", 
      justifyContent: "center" 
  }
+
+ console.log(inputs);
 
   return (
     <>
@@ -130,9 +137,10 @@ const Signup = (props) => {
 
               value={inputs.username}
               onChange={handleInputChange}
+              required={true}
             />
-
           </div>
+            {/* {errors? "Please Fill this field" : ""} */}
         
           <div className="col-md-6">
             <label htmlFor="inputPassword4" className="form-label">
@@ -147,6 +155,7 @@ const Signup = (props) => {
               name="fullname"
               value={inputs.fullname}
               onChange={handleInputChange}
+              required={true}
             />
           </div>
           <div className="col-3">
@@ -157,27 +166,53 @@ const Signup = (props) => {
               className="form-control"
               id="inputAddress1"
               placeholder="Enter Your Email"
-              type="email"
+              type='email'
               name="email"
-
               value={inputs.email}
               onChange={handleInputChange}
+              required={true}
             />
           </div>
           <div className="col-3">
-            <label htmlFor="inputAddress2" className="form-label">
+          <FormControl component="fieldset">
+      <FormLabel component="legend">Gender : -</FormLabel>
+      <RadioGroup row aria-label="gender" value={inputs.gender} onChange={handleInputChange} name="gender">
+        <FormControlLabel name='gender' value="female" control={<Radio />} label="Female"  />
+        <FormControlLabel name='gender' value="male" control={<Radio />} label="Male"  />
+      </RadioGroup>
+    </FormControl>
+            {/* <label htmlFor="inputAddress2" className="form-label">
               <WcIcon /> Gender :-
             </label>
-            <input
+            <input 
+            className="form col-1 my-5" 
+            id="inputAddress2"
+            type='radio'
+            name="gender"
+            value={inputs.gender}
+            onChange={handleInputChange}
+            />
+            <label htmlFor="gender"> Male </label>
+            <input 
+            className="form mx-2" 
+            id="inputAddress2"
+            // placeholder="Enter Your Gender"
+            type='radio'
+            name="gender"
+            value={inputs.gender}
+            onChange={handleInputChange}
+            />
+            <label htmlFor="gender"> Female</label> */}
+            {/* <input
               className="form-control"
               id="inputAddress2"
               placeholder="Enter Your Gender"
               type="text"
               name="gender"
-
               value={inputs.gender}
               onChange={handleInputChange}
-            />
+              required={true}
+            /> */}
           </div>
           <div className="col-md-3">
             <label htmlFor="inputCity" className="form-label">
@@ -188,7 +223,6 @@ const Signup = (props) => {
               id="inputCity2"
               type="date"
               name="date"
-
               value={inputs.date}
               onChange={handleInputChange}
             />
@@ -204,11 +238,11 @@ const Signup = (props) => {
               max="10"
               min="10"
               id="inputCity1"
-              type="text"
+              type='number'
               name="phone"
-
               value={inputs.phone}
               onChange={handleInputChange}
+              required={true}
             />
           </div>
           <div className="col-md-3">
@@ -221,9 +255,9 @@ const Signup = (props) => {
               id="inputCity4"
               type="password"
               name="password"
-
               value={inputs.password}
               onChange={handleInputChange}
+              required={true}
             />
           </div>
           <div className="col-md-3">
@@ -237,6 +271,7 @@ const Signup = (props) => {
               name="confirmpassword"
               value={inputs.confirmpassword}
               onChange={handleInputChange}
+              required={true}
             />
           </div>
           <div className="col-md-3">
@@ -246,10 +281,11 @@ const Signup = (props) => {
           onChange={(e) => setFile(e.target.files[0])}
           className="form-control"
           id="file"
+          required={true}
           />
           </div>
           <div className="btn">
-        <button className="btn btn-primary" onSubmit={onSubmit}>Sign Up</button>
+        <button className="btn btn-primary" onSubmit={onSubmit}><CheckCircleIcon/> Sign Up</button>
           </div>
       </div>
       </div>
