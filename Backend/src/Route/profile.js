@@ -16,4 +16,14 @@ router.get('/', auth, async (req, res) => {
   }
 })
 
+router.get('/getuser' , async(req, res)=>{
+  try {
+    const result = await Auth2.find()
+    return res.json(result);
+  } catch (error) {
+    console.log('data not found', error);
+  }
+})
+
+
 module.exports = router;

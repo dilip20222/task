@@ -58,12 +58,20 @@ console.log({profile});
 
 const [update , setupdate] = useState({})
 const onSubmit = (e) => {
-    e.preventDefault();
+  e.preventDefault();
     try{
-
         // We need to pass the data for the update About which data we have to update
-        axios.put(`http://localhost:3000/api/update/${profile._id}`, profile)
-         .then(res=>setProfile(res))
+        axios.put(`http://localhost:3000/api/update/${profile._id}`,{headers :{tokens : `${token}`}}, profile)
+         .then((res)=>{
+           if(res.data !== token)
+           {
+             console.log("Permission Denied")
+          }
+          else
+          {
+            setProfile(res)
+          }
+          })
          history.push('/dashboard')
     }
     catch(error){

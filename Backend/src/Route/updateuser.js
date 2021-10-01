@@ -7,7 +7,7 @@ const auth = require("../middleware/auth");
 const bcrypt = require("bcryptjs");
 let jwt = require("jsonwebtoken");
 
-router.put("/update/:id", async (req, res) => {
+router.put("/update/", auth , async (req, res) => {
   if (!(await Auths.findOne({ _id: req.params.id }))) {
     return res.status(400).json("user not found");
   }
@@ -23,5 +23,17 @@ router.put("/update/:id", async (req, res) => {
   );
   res.status(200).json(updatedUser);
 });
+
+
+router.delete("/delete/:id", async (req, res) => {
+  if (!(await Auths.findOne({ _id: req.params.id }))) {
+    return res.status(400).json("user not found");
+  }
+  let updatedUser = await Auths.findByIdAndDelete(
+    { _id: req.params.id },
+  );
+  res.status(200).json(updatedUser);
+});
+
 
 module.exports = router;

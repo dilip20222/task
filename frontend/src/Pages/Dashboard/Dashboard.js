@@ -23,6 +23,7 @@ import Logout from '../../Components/logout/logout';
 import Navbar from '../../Components/Navbar/Navbar';
 import { Profile } from '../../Components/profile/Profile';
 import Update from '../Update/Update';
+import Users from '../../Components/userprofile.js/Users';
  const flex = {
      display:'flex'
  }
@@ -168,6 +169,7 @@ export default function Dashboard() {
   return (
       <>
      <Navbar/>
+     <Users/>
     </>
   );
 }
