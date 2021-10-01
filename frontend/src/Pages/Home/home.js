@@ -31,10 +31,10 @@ const Home = (props) => {
                 <Switch>
                     <Route exact path="/SignIn" component={SignIn}>
                     </Route>
-                    <Route exact path="/SignUp" component={SignUp}>
+                    <Route exact path="/" component={SignUp}>
                     </Route>
-                    <Route exact path="/update" component={Update}>
-                        </Route>
+                    <PrivateRoute exact path="/update" component={Update}>
+                        </PrivateRoute>
                     <PrivateRoute
                      exact path="/dashboard" component={Dashboard}>
                      </PrivateRoute>

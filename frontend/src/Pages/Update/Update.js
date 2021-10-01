@@ -24,6 +24,7 @@ import axios from "axios";
 import useForm from "../../Cutomhook/Validationhook";
 import { Nav } from '../../Components/Navbar/Nav';
 import Navbar from '../../Components/Navbar/Navbar';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const Update = (props) => {
 
@@ -88,12 +89,15 @@ const onchange = (event)=>{
      <Navbar/>  
      <form onSubmit={onSubmit} className="p-4" style={head}>
       <div>
-          <div className="user" style={{display:'flex' , alignItems:'center'}}>
-          <img style={{width:"100px"}} src={profile.file && `http://localhost:3000/uploads/${profile.file}`} alt="" />
+          <div className="user" style={{display:'flex' , alignItems:'center' , justifyContent:'space-evenly'}}>
+          <img style={{width:"120px" , borderRadius:'15px'}} src={profile.file && `http://localhost:3000/uploads/${profile.file}`} alt="" />
       <h1 className='text-center'>
             <AddReactionTwoToneIcon className="icons mx-3" />
            Update Profile
           </h1>
+          <div className="btn">
+          <button className="btn btn-success" ><ArrowBackIcon/> Back</button>
+          </div>
           </div>
            <hr />
            <CustomizedSnackbars
@@ -164,8 +168,8 @@ const onchange = (event)=>{
             <input
               className="form-control"
               placeholder="Enter Your Contact No."
-              max="10"
-              min="10"
+            //   max="10"
+            //   min="10"
               id="inputCity1"
               type="text"
               name="phone"
@@ -174,33 +178,6 @@ const onchange = (event)=>{
               onChange={onchange}
             />
           </div>
-          {/* <div className="col-md-3">
-            <label htmlFor="inputZip" className="form-label">
-              <SecurityIcon /> Password :-
-            </label>
-            <input
-              placeholder="Enter Password"
-              className="form-control"
-              id="inputCity4"
-              type="password"
-              name="password"
-              value={setdata}
-              onChange={onchange}
-            />
-          </div>
-          <div className="col-md-3">
-            <label htmlFor="inputZip" className="form-label">
-              <LockIcon />  confirmpassword :-
-            </label>
-            <input
-              className="form-control"
-              id="inputCity5"
-              type="password"
-              name="confirmpassword"
-              value={setdata}
-              onChange={onchange}
-            />
-          </div> */}
           <div className="col-md-3">
 <label htmlFor="file" className="form-label">Image : -</label>
         <input

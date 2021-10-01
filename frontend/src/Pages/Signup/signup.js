@@ -235,8 +235,7 @@ const Signup = (props) => {
             <input
               className="form-control"
               placeholder="Enter Your Contact No."
-              max="10"
-              min="10"
+              maxLength={10}
               id="inputCity1"
               type='number'
               name="phone"

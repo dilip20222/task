@@ -17,12 +17,28 @@ export const Profile = () => {
     .then(data => setResponseData(data))
   },[])
 
+const image = {
+  width:"100px" ,
+   borderRadius:'15px' , 
+   objectFit:'cover',
+}
+
+const card = {
+  background: "linear-gradient(#444 , #999 , #333)",
+  borderRadius:'10px' ,
+  color :'#d4de48'
+}
+
+const details={
+  color:"white"
+}
+
   return (
-    <div className="conatiner">
+    <div className="conatiner" style={card}>
       <div className="maincard p-4">
         <h3>User Profile</h3>
-        <div className="my-4">
-          <img style={{width:"100px"}}
+        <div className="my-4 text-center" style={details} >
+          <img style={image}
            src={responseData?.file && `http://localhost:3000/uploads/${responseData?.file}`}
           />
             <div className="userfrm my-2">Username : {responseData.username}  </div>
@@ -30,8 +46,6 @@ export const Profile = () => {
           <div className="userfrm my-2">Email : {responseData.email} </div>
           <div className="userfrm my-2">Phone : {responseData.phone} </div>
           <div className="userfrm my-2">Gender :{responseData.gender} </div>
-          {/* <div className="userfrm my-2">Date :{responseData.date} </div> */}
-          {/* <div className="userfrm my-2">Image :{responseData.file}</div> */}
         </div>
       </div>
     </div>
