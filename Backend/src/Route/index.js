@@ -183,7 +183,5 @@ router.put("/update/:id", auth , async (req, res) => {
     );
     res.status(200).json(updatedUser);
   });
-  
-
 
 module.exports = router;
