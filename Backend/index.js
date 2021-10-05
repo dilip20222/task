@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const connection = require("./server");
 const app = express();
 const cors = require("cors");
-const port = 3000;
+const port = process.env.PORT || 3000;
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 app.listen();
@@ -25,10 +25,11 @@ app.get("/", (req, res) => {
 
 // Routes
 
-app.use("/api", require("./src/Route/Register"));
-app.use("/api", require("./src/Route/Login"));
-app.use("/api", require("./src/Route/profile"));
-app.use("/api" , require('./src/Route/updateuser'))
+app.use("/api" , require("./src/Route/index"))
+// app.use("/api", require("./src/Route/Register"));
+// app.use("/api", require("./src/Route/Login"));
+// app.use("/api", require("./src/Route/profile"));
+// app.use("/api" , require('./src/Route/updateuser'))
 app.use('/uploads', express.static('uploads'));
 
 app.listen(port, function() {

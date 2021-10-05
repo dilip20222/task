@@ -17,9 +17,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import Logout from '../logout/logout';
-import { Link } from 'react-router-dom';
 import { Profile } from '../profile/Profile';
-import Update from '../../Pages/Update/Update';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',

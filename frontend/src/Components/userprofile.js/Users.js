@@ -6,14 +6,9 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
-import { useHistory } from "react-router";
-
-
 
 export default function Users() {
-  let [responseData, setResponseData] = React.useState([]);
-    const history = useHistory()
-    
+  let [responseData, setResponseData] = React.useState([]);    
     console.log(responseData);
     
     const handleSubmit = (userId) => {

@@ -2,17 +2,15 @@ import { useState } from "react";
 
 const useForm = (initialValues) => {
   const [inputs, setInputs] = useState({});
-  
 
   const [errors, setErrors] = useState({});
-  const [image , setImage] = useState("");
+  const [image, setImage] = useState("");
 
   const handleInputChange = (event) => {
     const { type } = event.target;
     event.persist();
-    if(type == "file" )
-    {
-      setImage(event.target.files[0])
+    if (type === "file") {
+      setImage(event.target.files[0]);
     }
     setInputs((inputs) => ({
       ...inputs,
@@ -25,7 +23,8 @@ const useForm = (initialValues) => {
     handleInputChange,
     inputs,
     setInputs,
-    errors
+    errors,
+    
   };
 };
 

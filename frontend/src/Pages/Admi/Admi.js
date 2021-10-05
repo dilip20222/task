@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 
-export const Profile = () => {
+
+export const Admi = () => {
+
+
   let [responseData, setResponseData] = React.useState({})
   // console.log(responseData)
   const token = localStorage.getItem('token');
 
-  React.useEffect(() => {
+React.useEffect(() => {
     fetch("http://localhost:3000/api/",{headers :{tokens : `${token}`}})
-    .then(response => response.json())
-   
+    .then(response => response.json())  
     .then(data => setResponseData(data))
   },[])
 
@@ -33,7 +36,7 @@ const details={
       <div className="maincard p-4">
         <h3>User Profile</h3>
         <div className="my-4 text-center" style={details} >
-          <img style={image} alt="User"
+          <img style={image}
            src={responseData?.file && `http://localhost:3000/uploads/${responseData?.file}`}
           />
             <div className="userfrm my-2">Username : {responseData.username}  </div>

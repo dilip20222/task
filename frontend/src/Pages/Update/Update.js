@@ -10,7 +10,7 @@ import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
 import SecurityIcon from '@mui/icons-material/Security';
 import WcIcon from '@mui/icons-material/Wc';
 import LockIcon from '@mui/icons-material/Lock';
-import validate from "../../Components/validate";
+import validate from "../../Cutomhook/validate";
 import NewReleasesIcon from '@mui/icons-material/NewReleases';
 import AddReactionTwoToneIcon from '@mui/icons-material/AddReactionTwoTone';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -42,14 +42,14 @@ const Update = (props) => {
 
   const [file, setFile] = useState("");
   const [input, setInput] = useState({ email: "" });
-//   const { inputs, onchange } = useForm({});
+  // const { inputs, onchange } = useForm({});
   
   const history = useHistory()
   let [responseData, setResponseData] = React.useState({})
-  const token = localStorage.getItem('token')
+  const token = localStorage.getItem('token');
   const [profile , setProfile] = useState({})
-//   console.log("data",data)
-console.log({profile});
+  console.log({profile});
+
   React.useEffect(() => {
     fetch("http://localhost:3000/api/",{headers :{tokens : `${token}`}})
     .then(response => response.json())
@@ -62,7 +62,7 @@ const onSubmit = (e) => {
     try{
         // We need to pass the data for the update About which data we have to update
         axios.put(`http://localhost:3000/api/update/${profile._id}`,{headers :{tokens : `${token}`}}, profile)
-         .then((res)=>{
+        .then((res)=>{
            if(res.data !== token)
            {
              console.log("Permission Denied")
@@ -74,8 +74,8 @@ const onSubmit = (e) => {
           })
          history.push('/dashboard')
     }
-    catch(error){
-        console.log("error")
+    catch(msg){
+        console.log({msg : "Not Updated"});
     } 
 }
 

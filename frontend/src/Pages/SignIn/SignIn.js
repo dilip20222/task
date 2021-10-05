@@ -2,8 +2,7 @@ import React, {  useState } from "react";
 import { useHistory } from "react-router";
 import useForm from "../../Cutomhook/Validationhook";
 import axios from "axios";
-import MuiAlert from "@mui/material/Alert";
-import validate from "../../Components/validate";
+import validate from "../../Cutomhook/validate";
 import CustomizedSnackbars from "../../Alert/SuccessSnackbar";
 import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
 import SecurityIcon from '@mui/icons-material/Security';
@@ -11,10 +10,6 @@ import AddReactionTwoToneIcon from '@mui/icons-material/AddReactionTwoTone';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorSnackbar from "../../Alert/Error";
 import { Nav } from "../../Components/Navbar/Nav";
-const Alert = React.forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
-
 
 const SignIn = (props) => {
   
