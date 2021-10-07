@@ -10,6 +10,7 @@ const fs = require("fs");
 const path = require("path");
 const multer = require("multer");
 const GridFsStorage = require("multer-gridfs-storage");
+const { find } = require("../model/user");
 
 router.use(express.static(__dirname + "./uploads/"));
 
@@ -182,6 +183,11 @@ router.put("/update/:id", auth , async (req, res) => {
       { _id: req.params.id },
     );
     res.status(200).json(updatedUser);
+  });
+
+  router.get("/count", async(req, res)=>{
+    let count = (await Auth.find()).length;
+    res.json(count); 
   });
 
 module.exports = router;

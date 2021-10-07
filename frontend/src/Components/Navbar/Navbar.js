@@ -18,6 +18,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import Logout from '../logout/logout';
 import { Profile } from '../profile/Profile';
+import { Admin } from '../../Admin/Admin';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -49,7 +50,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     width: '100%',
@@ -61,7 +61,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 
-export default function Navbar() {
+export default function   Navbar() {
   const history = useHistory();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -111,9 +111,11 @@ export default function Navbar() {
       <MenuItem onClick={handleMenuClose}>
         <Profile/>
       </MenuItem>
+      {/* <MenuItem onClick={handleMenuClose}>
+        <Admin/>
+      </MenuItem> */}
       <div className="text-center">
       <button className="btn btn-info p-1 my-1" onClick={updatehandler}>Update Account</button>
-      {/* <button className="btn btn-warning p-1 mx-3">Detele Account</button> */}
       </div>
     </Menu>
   );
@@ -145,7 +147,7 @@ export default function Navbar() {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+        <p>User Profile</p>
       </MenuItem>
     </Menu>
   );

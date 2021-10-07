@@ -34,7 +34,7 @@ export const Nav = () => {
                         <Link to="/SignIn" style={li}>SignIn </Link>
                         </li>
                         <li className="mx-2" > 
-                        <Link to="/" style={li} >SignUp </Link>
+                        <Link to="/SignUp" style={li} >SignUp </Link>
                         </li>
                     </ul>
                 </div>

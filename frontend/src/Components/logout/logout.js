@@ -1,23 +1,23 @@
 import { useHistory } from 'react-router';
 import { useState } from 'react';
-import LogoutIcon from '@mui/icons-material/Logout';;
+import LogoutIcon from '@mui/icons-material/Logout';
+import { useDispatch } from 'react-redux';
+import { resetStore } from '../../store/store';
+
 
 function Logout() {
-    const [user, setUser] = useState(
-        localStorage.getItem('token')
-    );
+
+  const dispatch = useDispatch();
   const history = useHistory();
   const logoutHandler = () => {
     localStorage.removeItem('token');
-    setUser(user);
+    dispatch(resetStore());
     history.push('/SignIn');
   };
   return (
     <div>
       <button className="btn btn-primary"
-        onClick={() => {
-          logoutHandler();
-        }}
+        onClick={logoutHandler}
       ><LogoutIcon/>
       </button>
     </div>

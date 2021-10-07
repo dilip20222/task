@@ -6,31 +6,40 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { users } from "../../store/store";
 
 export default function Users() {
-  let [responseData, setResponseData] = React.useState([]);    
-    console.log(responseData);
-    
-    const handleSubmit = (userId) => {
-        axios.delete(`http://localhost:3000/api/delete/${userId}`).then((res)=>{
-            setResponseData((data) => (
-                data.filter((d) => d._id !== userId)
-            ))
-        });
-    }
-    React.useEffect(() => {
-      axios.get("http://localhost:3000/api/getuser").then((res) => {
-        setResponseData(res.data);
-      });
-    }, []);
-  
 
+  const dispatch = useDispatch();
+  const userprofiles = useSelector(state => state?.profiles?.alluser || null);
+
+  useEffect(() => {
+    if(!userprofiles) {
+      axios.get("http://localhost:3000/api/getuser").then((res) => {
+        dispatch(users(res.data));
+      });
+    }
+  }, [userprofiles]);
+  
+    const handleSubmit = (userId) => {
+        axios.delete(`http://localhost:3000/api/delete/${userId}`)
+        .then((res)=>{
+        dispatch(users(userprofiles.filter((single) => single._id !== userId)));
+      })
+    }
+      
+      // setResponseData((data) => (
+      //     data.filter((d) => d._id !== userId)
+      // ))
 
   return (
-    <>
-      <div className="d-flex flex-wrap justify-content-center my-2">
-        { responseData &&responseData.map((product , i) => (
-          <Card sx={{ maxWidth: 345 }} className="mx-3 my-3 p-2" key={i}>
+    <>  
+    <div className="d-flex flex-wrap">
+      <div className="my-2" style={{width:'1200px' , height:'100vh', display:'flex' , flexWrap:'wrap' , flexDirection:'row'}}>
+        { userprofiles &&userprofiles?.map((product , i) => (
+          <Card sx={{ maxWidth: 300 }} className="mx-3 my-3 p-2" key={i}>
             <CardMedia
               component="img"
               height="140"
@@ -57,7 +66,7 @@ export default function Users() {
               <Typography gutterBottom variant="h5" component="div">
                 {product.gender}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography gutterBottom variant="h5" component="div">
                 {product.fullname}
               </Typography>
             </CardContent>
@@ -67,6 +76,7 @@ export default function Users() {
             </CardActions>
           </Card>
         ))}
+      </div>
       </div>
     </>
   );
