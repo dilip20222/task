@@ -27,6 +27,7 @@ export default function Users() {
         axios.delete(`http://localhost:3000/api/delete/${userId}`)
         .then((res)=>{
         dispatch(users(userprofiles.filter((single) => single._id !== userId)));
+        console.log(res)
       })
     }
       
