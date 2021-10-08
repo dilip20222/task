@@ -6,7 +6,6 @@ const cors = require("cors");
 const port = process.env.PORT || 3000;
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-app.listen();
 const bodyParser = require('body-parser')
 const multer = require('multer');
 

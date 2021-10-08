@@ -1,9 +1,9 @@
 import React from "react";
-import SignIn from "./Pages/SignIn/SignIn";
-import SignUp from "./Pages/Signup/signup";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Redirect } from "react-router";
 import Dashboard from "./Pages/Dashboard/Dashboard";
+import SignUp from "./Pages/Signup/signup";
+import SignIn from "./Pages/SignIn/SignIn";
 import Update from "./Pages/Update/Update";
 import Layout from "./Pages/Layout";
 import Users from "./Components/userprofile.js/Users";

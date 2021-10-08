@@ -78,13 +78,9 @@ router.post("/register", upload.single("file"), async (req, res, next) => {
     });
 
     // Create token
-    const token = jwt.sign(
-      { _id: user._id, email },
-      process.env.TOKEN_KEY,
-      {
-        expiresIn: "2h",
-      }
-    );
+    const token = jwt.sign({ _id: user._id, email }, process.env.TOKEN_KEY, {
+      expiresIn: "2h",
+    });
 
     user.token = token;
     console.log("User Token", token);
@@ -98,63 +94,60 @@ router.post("/register", upload.single("file"), async (req, res, next) => {
 
 // Login API
 
-router.post("/login", async(req, res) => {
-    try {
-        // Get user input
-        const { email, password } = req.body;
+router.post("/login", async (req, res) => {
+  try {
+    // Get user input
+    const { email, password } = req.body;
 
-        // Validate user input
-        if (!(email && password)) {
-            res.status(400).send("All input is required");
-        }
-        // Validate if user exist in our database
-        const user = await Auth.findOne({ email });
-        if (!user) {
-            res.status(404).json("User not found");
-        }
-        if (user && (await bcrypt.compare(password, user.password))) {
-            // Create token
-            const token = jwt.sign({ _id: user._id, email },
-                process.env.TOKEN_KEY, {
-                    expiresIn: "2h",
-                }
-            );
-
-            // save user token
-            user.token = token;
-            console.log("token", token)
-            res.status(200).json(user)
-        }
-    } catch (err) {
-        res.status(400).send("Invalid Credentials");
-        console.log(err);
+    // Validate user input
+    if (!(email && password)) {
+      res.status(400).send("All input is required");
     }
+    // Validate if user exist in our database
+    const user = await Auth.findOne({ email });
+    if (!user) {
+      res.status(404).json("User not found");
+    }
+    if (user && (await bcrypt.compare(password, user.password))) {
+      // Create token
+      const token = jwt.sign({ _id: user._id, email }, process.env.TOKEN_KEY, {
+        expiresIn: "2h",
+      });
+
+      // save user token
+      user.token = token;
+      console.log("token", token);
+      res.status(200).json(user);
+    }
+  } catch (err) {
+    res.status(400).send("Invalid Credentials");
+    console.log(err);
+  }
 });
 
 // Dashboard API
 
-router.get('/', auth, async (req, res) => {
-    try {
-      const result = await Auth2.findById(req.user._id)
-      return res.json(result);
-    } catch (error) {
-      console.log('data not found', error);
-    }
-  })
-  
-  router.get('/getuser' , async(req, res)=>{
-    try {
-      const result = await Auth2.find()
-      return res.json(result);
-    } catch (error) {
-      console.log('data not found', error);
-    }
-  })
+router.get("/", auth, async (req, res) => {
+  try {
+    const result = await Auth2.findById(req.user._id);
+    return res.json(result);
+  } catch (error) {
+    console.log("data not found", error);
+  }
+});
+
+router.get("/getuser", async (req, res) => {
+  try {
+    const result = await Auth2.find();
+    return res.json(result);
+  } catch (error) {
+    console.log("data not found", error);
+  }
+});
 
 // Update API
 
-
-router.put("/update/:id", auth , async (req, res) => {
+router.put("/update/:id", auth, async (req, res) => {
   if (!(await Auth.findOne({ _id: req.params.id }))) {
     return res.status(400).json("user not found");
   }
@@ -168,26 +161,66 @@ router.put("/update/:id", auth , async (req, res) => {
     },
     { new: true }
   );
-  console.log(updatedUser)
+  console.log(updatedUser);
   res.status(200).json(updatedUser);
 });
 
-  
 //  Delete API
-  
-  router.delete("/delete/:id", async (req, res) => {
-    if (!(await Auth.findOne({ _id: req.params.id }))) {
-      return res.status(400).json("user not found");
-    }
-    let updatedUser = await Auth.findByIdAndDelete(
-      { _id: req.params.id },
-    );
-    res.status(200).json(updatedUser);
-  });
 
-  router.get("/count", async(req, res)=>{
-    let count = (await Auth.find()).length;
-    res.json(count); 
-  });
+router.delete("/delete/:id", async (req, res) => {
+  if (!(await Auth.findOne({ _id: req.params.id }))) {
+    return res.status(400).json("user not found");
+  }
+  let updatedUser = await Auth.findByIdAndDelete({ _id: req.params.id });
+  res.status(200).json(updatedUser);
+});
+
+router.get("/count", async (req, res) => {
+  let count = (await Auth.find()).length;
+  res.json(count);
+});
+
+const getPageData = ({page = 0, limit = 2}) => {
+  page = parseInt(page);
+  if(!limit) { limit = 2 };
+  limit = parseInt(limit);
+  let skip = page === 0 ? 0 : (page) * limit;
+  return {page, limit, skip}
+}
+
+
+
+const getPageInfo = ({count = 0, limit, page}) => {
+  count = parseInt(count);
+  const info = { count };
+  let totalPages = (count / limit) - 1;
+  if(page >= 1) {
+    info.prev = page - 1;
+  }
+  if(page < totalPages) {
+    info.next = page + 1
+  }
+  return info;
+} 
+
+router.get("/pages", async (req, res, next) => {
+  // skip = page - 1 * limit
+  try {
+    let { page, limit, skip } = getPageData(req.query);
+    
+    
+    const count = await Auth.countDocuments();
+    const users = await Auth.find().skip(skip).limit(limit);
+    const info = getPageInfo({count, limit, page});
+    
+    res.send({
+      info,
+      users,
+    });
+  } catch (error) {
+    res.sendStatus(500);
+  }
+});
 
 module.exports = router;
+

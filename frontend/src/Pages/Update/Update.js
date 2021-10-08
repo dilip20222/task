@@ -29,17 +29,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { addprofile } from "../../store/store";
 // import profileApp,{addprofile} from "";
 const Update = (props) => {
+
   const dispatch = useDispatch();
   const user = useSelector(state => state?.profiles?.profile || {});
   const [profile, setProfile] = useState({})
+  const [open, setOpen] = useState(false);
+  const [input, setInput] = useState({ email: "" });
+  const [notification, setnotification] = useState(false);
+  let [responseData, setResponseData] = React.useState({});
   
   React.useEffect(() => {
     setProfile(user);
   }, [user]);
 
-  const [open, setOpen] = useState(false);
-  const [notification, setnotification] = useState(false);
-  
   const handleClose = (reason, event) => {
     if (reason === "clickaway") {
       return;
@@ -49,11 +51,9 @@ const Update = (props) => {
   };
 
   const [file, setFile] = useState("");
-  const [input, setInput] = useState({ email: "" });
   // const { inputs, onchange } = useForm({});
 
   const history = useHistory();
-  let [responseData, setResponseData] = React.useState({});
   const token = localStorage.getItem("token");
   const onSubmit = (e) => {
     e.preventDefault();

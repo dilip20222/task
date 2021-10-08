@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useHistory } from 'react-router';
+import { Profile } from '../profile/Profile';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -17,8 +18,6 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import Logout from '../logout/logout';
-import { Profile } from '../profile/Profile';
-import { Admin } from '../../Admin/Admin';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
