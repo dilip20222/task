@@ -8,7 +8,7 @@ import { Count } from "../../Components/Count";
 export default function Dashboard() {
   const dispatch = useDispatch();
   const usersData = useSelector((state) => state.profiles.counts || null);
-
+  console.log({usersData})
   useEffect(() => {
      if(!usersData) {  
       axios.get("http://localhost:3000/api/count").then((res) => {

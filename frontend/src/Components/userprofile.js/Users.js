@@ -31,7 +31,7 @@ export default function DenseTable() {
   const [posts, setPosts] = useState([]);
   const [pageInfo, setPageInfo] = useState({})
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(8);
+  const [postsPerPage] = useState();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -56,7 +56,6 @@ export default function DenseTable() {
       .then((res) => {
         DATA[page] = res.data;
         setPageInfo(res.data.info);
-        dispatch(setDashboardCounts(res.data))
         dispatch(users(res.data.users));
       });
 
