@@ -1,12 +1,16 @@
 import * as React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { setDashboardCounts, users } from "../../store/store";
+import { resetStore, setDashboardCounts, users } from "../../store/store";
 import { useDispatch, useSelector } from "react-redux";
+import { AllPages } from "../../store/store";
+import { setUsers } from "../../store/Pagination";
 import TablePagination from "@mui/material/TablePagination";
-import Posts from "../Posts";
+import usersReducer from "../../store/Pagination";
+
 import Pagination from "../../Pages/Pagination/Pagination";
 import Table from "@mui/material/Table";
+import { SetPagination } from "../../store/store";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
@@ -16,47 +20,46 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import axios from "axios";
 
+var DATA = {}
 export default function DenseTable() {
   const dispatch = useDispatch();
 
   const userprofiles = useSelector((state) => state?.profiles?.alluser || null);
-  const usersData = useSelector((state) => state.profiles.counts || null);
-
+  const usercount = useSelector((state)=>  state?.profiles?.counts || null)
+  const paginationdata = useSelector((state) => state?.profiles?.pagesdata?.Users || null);
+  
   const [posts, setPosts] = useState([]);
-  const [users, setUsers] = useState([]);
   const [pageInfo, setPageInfo] = useState({})
-  const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(7);
-
+  const [postsPerPage] = useState(8);
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+  
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-  // useEffect(() => {
-  //   if (!userprofiles) {
-  //     axios.get("http://localhost:3000/api/getuser").then((res) => {
-  //       dispatch(users(res.data));
-  //       setPosts(res.data);
-  //       dispatch(setDashboardCounts(res.data.length));
-  //     });
-  //   }
-  // }, [userprofiles]);
-  // page = for Page
-  // perPage = 
+ 
   useEffect(() => {
-    axios.get(`http://localhost:3000/api/pages?page=${page}&limit=${rowsPerPage}`).then((res) => {
-      // dispatch(users(res.data));
-      setPageInfo(res.data.info);
-      setUsers(res.data.users);
-      dispatch(setDashboardCounts(res.data.length));
-    });
+    if (DATA[page]) {
+      setPageInfo(DATA[page].info);
+      dispatch(users(DATA[page].users));
+      return;
+    }
+    axios
+      .get(
+        `http://localhost:3000/api/pages?page=${page}&limit=${rowsPerPage}`
+      )
+      .then((res) => {
+        DATA[page] = res.data;
+        setPageInfo(res.data.info);
+        dispatch(setDashboardCounts(res.data))
+        dispatch(users(res.data.users));
+      });
+
   }, [page, rowsPerPage]);
 
   const handleSubmit = (userId) => {
@@ -76,26 +79,20 @@ export default function DenseTable() {
   };
   return (
     <>
-      {/* <Posts posts={currentPosts} loading={loading} />
-      <Pagination
-        postsPerPage={postsPerPage}
-        totalPosts={posts.length}
-        paginate={paginate}
-      /> */}
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead className="success">
             <TableRow>
-              <TableCell align="right">Full Name</TableCell>
-              <TableCell align="right">User Name</TableCell>
-              <TableCell align="right">Email</TableCell>
-              <TableCell align="right">Phone</TableCell>
-              <TableCell align="right">Gender</TableCell>
-              <TableCell align="right">Delete</TableCell>
+              <TableCell align="right"><strong>Full Name</strong></TableCell>
+              <TableCell align="right"><strong>User Name</strong></TableCell>
+              <TableCell align="right"><strong>Email</strong></TableCell>
+              <TableCell align="right"><strong>Phone</strong></TableCell>
+              <TableCell align="right"><strong>Gender</strong></TableCell>
+              <TableCell align="right"><strong>Delete</strong></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {users?.map((row) => (
+            {userprofiles &&userprofiles?.map((row) => (
               <TableRow
                 key={row.name}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}

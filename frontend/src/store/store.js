@@ -4,11 +4,13 @@ const USER_DATA = "USER_DATA";
 const DASHBOARD_COUNTS = "DASHBOARD_COUNTS";
 const DELETE = "DELETE"
 const RESET = "RESET";
+const PAGINATION_PAGE = "PAGINATION_PAGE";
+const PAGINATION_PAGE_DATA = "PAGINATION_PAGE_DATA"
 
 export function resetStore(state = null) {
   return {
     type: RESET,
-    state: state || { profile: null, counts: null , alluser: null},
+    state: state || { profile: null, counts: null , alluser: null , pagesdata : null},
   };
 }
 
@@ -31,7 +33,25 @@ export function setDashboardCounts(counts) {
     counts,
   }
 }
-const defaultProfile = { profile: null, counts: null , alluser: null};
+
+export function SetPagination(pages)
+{
+  return {
+    type: PAGINATION_PAGE,
+    pages
+  }
+}
+
+
+export function AllPages(pagesdata)
+{
+  return {
+    type: PAGINATION_PAGE_DATA,
+    pagesdata
+  }
+}
+
+const defaultProfile = { profile: null, counts: null , alluser: null , pages: null , pagesdata : null};
 
 function profiles(state = defaultProfile, action) {
   console.log("action", { action });
@@ -56,6 +76,16 @@ function profiles(state = defaultProfile, action) {
         ...state,
         counts: action.counts,
       };
+      case PAGINATION_PAGE:
+        return {
+          ...state, 
+          pages: action.pages
+        }
+        case PAGINATION_PAGE_DATA:
+          return {
+            ...state, 
+            pagesdata : action.pagesdata
+          }
     default:
       return state;
   }

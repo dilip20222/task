@@ -10,28 +10,33 @@
     </a>
     <ul className="nav nav-pills flex-column mb-auto">
       <li className="nav-item">
+      <hr />
         <Link to="/dashboard" className="nav-link text-white" aria-current="page">
           <svg className="bi me-2" width="16" height="16"><use ></use></svg>
           Dashboard
         </Link>
       </li>
       <li>
+      <hr />
         <Link to="/users" className="nav-link text-white">
           <svg className="bi me-2" width="16" height="16"><use href="#speedometer2"></use></svg>
           Users
         </Link>
       </li>
       <li>
+        <hr />
         <Link to="/about" className="nav-link text-white">
           <svg className="bi me-2" width="16" height="16"><use href="#table"></use></svg>
           About
         </Link>
+        <hr />
       </li>
       <li>
         <a href="#" className="nav-link text-white">
           <svg className="bi me-2" width="16" height="16"><use href="#grid"></use></svg>
           Help
         </a>
+        <hr />
       </li>
     </ul>
     <div className="dropdown">
