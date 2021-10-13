@@ -1,35 +1,19 @@
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import MuiAlert from "@mui/material/Alert";
-import CustomizedSnackbars from "../../Alert/SuccessSnackbar";
-import ErrorSnackbar from "../../Alert/Error";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import ContactPhoneIcon from "@mui/icons-material/ContactPhone";
-import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import ContactsIcon from "@mui/icons-material/Contacts";
 import MarkEmailReadIcon from "@mui/icons-material/MarkEmailRead";
-import SecurityIcon from "@mui/icons-material/Security";
-import WcIcon from "@mui/icons-material/Wc";
-import LockIcon from "@mui/icons-material/Lock";
-import validate from "../../Cutomhook/validate";
-import NewReleasesIcon from "@mui/icons-material/NewReleases";
 import AddReactionTwoToneIcon from "@mui/icons-material/AddReactionTwoTone";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
-import React, { useState } from "react";
-import axios from "axios";
-import useForm from "../../Cutomhook/Validationhook";
-import { Nav } from "../../Components/Navbar/Nav";
-import Navbar from "../../Components/Navbar/Navbar";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useDispatch, useSelector } from "react-redux";
 import { addprofile } from "../../store/store";
-// import profileApp,{addprofile} from "";
-const Update = (props) => {
+import CustomizedSnackbars from "../../Alert/SuccessSnackbar";
+import ErrorSnackbar from "../../Alert/Error";
 
+const Update = (props) => {  
   const dispatch = useDispatch();
   const user = useSelector(state => state?.profiles?.profile || {});
   const [profile, setProfile] = useState({})
@@ -51,7 +35,6 @@ const Update = (props) => {
   };
 
   const [file, setFile] = useState("");
-  // const { inputs, onchange } = useForm({});
 
   const history = useHistory();
   const token = localStorage.getItem("token");

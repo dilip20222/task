@@ -2,7 +2,6 @@ import { useState } from "react";
 
 const useForm = (initialValues) => {
   const [inputs, setInputs] = useState({});
-
   const [errors, setErrors] = useState({});
   const [image, setImage] = useState("");
 

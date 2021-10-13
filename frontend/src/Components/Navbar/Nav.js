@@ -9,11 +9,9 @@ const head = {
      justifyContent: "space-around" ,
      alignItems:'center'
  }
-
  const ul = {
      display:'flex',
-     listStyle:'none',
-    
+     listStyle:'none',  
  }
  const li = {
     textDecoration:'none',

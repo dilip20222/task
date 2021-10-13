@@ -1,9 +1,9 @@
 import * as React from "react";
-import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 import { setDashboardCounts } from "../../store/store";
-import { Count } from "../../Components/Count";
+import { Count } from "../../Components/Count/Count";
 
 export default function Dashboard() {
   const dispatch = useDispatch();

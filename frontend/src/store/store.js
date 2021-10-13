@@ -53,7 +53,8 @@ export function AllPages(pagesdata)
 
 const defaultProfile = { profile: null, counts: null , alluser: null , pages: null , pagesdata : null};
 
-function profiles(state = defaultProfile, action) {
+function profiles(state = defaultProfile, action)
+ {
   console.log("action", { action });
   switch (action.type) {
     case PROFILE_DATA:

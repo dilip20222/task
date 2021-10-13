@@ -8,9 +8,6 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 export default function ErrorSnackbar(props) {
-  // const [open, setOpen] = React.useState(false);
-
-  
   return (
     <Stack spacing={2} sx={{ width: '100%' }}>
       <Snackbar open={props.notification} autoHideDuration={2000} onClose={props.handlerclose}>

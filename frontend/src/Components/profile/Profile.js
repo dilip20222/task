@@ -1,12 +1,15 @@
-import axios from "axios";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import profileApp, { addprofile } from "../../store/store";
+import { useDispatch, useSelector } from "react-redux"; 
+import axios from "axios";
+import { addprofile } from "../../store/store";
+import store from '../../store/store';
+
 export const Profile = () => {
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
   const responseData = useSelector((state) => state.profiles.profile);
   console.log("Profile Data>>>>>>>>>>", responseData);
+  
   React.useEffect(() => {
     axios
       .get("http://localhost:3000/api/", {headers: { tokens: `${token}`}})
@@ -32,6 +35,7 @@ export const Profile = () => {
   };
 
   return (
+    <>
     <div className="conatiner" style={card}>
       <div className="maincard p-4">
         <h3>User Profile</h3>
@@ -62,5 +66,6 @@ export const Profile = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };

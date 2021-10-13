@@ -1,6 +1,7 @@
+import React, { useState } from "react";
+import axios from "axios";
 import { useHistory } from "react-router-dom";
-import CustomizedSnackbars from "../../Alert/SuccessSnackbar";
-import ErrorSnackbar from "../../Alert/Error";
+import useForm from "../../Cutomhook/Validationhook";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import ContactPhoneIcon from "@mui/icons-material/ContactPhone";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
@@ -16,11 +17,10 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
-
-import React, { useState } from "react";
-import axios from "axios";
-import useForm from "../../Cutomhook/Validationhook";
+import ErrorSnackbar from "../../Alert/Error";
+import Successbar from "../../Alert/SuccessSnackbar";
 import { Nav } from "../../Components/Navbar/Nav";
+
 const Signup = (props) => {
   const [open, setOpen] = useState(false);
   const [errors, setErrors] = useState({});
@@ -90,7 +90,7 @@ const Signup = (props) => {
             Registration - Form
           </h1>
           <hr />
-          <CustomizedSnackbars
+          <Successbar
             handlerclose={handleClose}
             open={open}
             setOpen={setOpen}

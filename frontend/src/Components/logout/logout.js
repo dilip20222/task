@@ -1,12 +1,9 @@
 import { useHistory } from 'react-router';
-import { useState } from 'react';
-import LogoutIcon from '@mui/icons-material/Logout';
 import { useDispatch } from 'react-redux';
+import LogoutIcon from '@mui/icons-material/Logout';
 import { resetStore } from '../../store/store';
 
-
 function Logout() {
-
   const dispatch = useDispatch();
   const history = useHistory();
   const logoutHandler = () => {

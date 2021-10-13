@@ -1,16 +1,9 @@
 import * as React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
-import { resetStore, setDashboardCounts, users } from "../../store/store";
+import { useState , useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AllPages } from "../../store/store";
-import { setUsers } from "../../store/Pagination";
+import axios from "axios";
 import TablePagination from "@mui/material/TablePagination";
-import usersReducer from "../../store/Pagination";
-
-import Pagination from "../../Pages/Pagination/Pagination";
 import Table from "@mui/material/Table";
-import { SetPagination } from "../../store/store";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
@@ -18,7 +11,7 @@ import TableHead from "@mui/material/TableHead";
 import Button from "@mui/material/Button";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import axios from "axios";
+import { users } from "../../store/store";
 
 var DATA = {}
 export default function DenseTable() {
@@ -76,32 +69,37 @@ export default function DenseTable() {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  const head = {
+    background: "linear-gradient(#444 , #999 , #333)",
+  };
+
   return (
     <>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper}  >
         <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-          <TableHead className="success">
-            <TableRow>
-              <TableCell align="right"><strong>Full Name</strong></TableCell>
-              <TableCell align="right"><strong>User Name</strong></TableCell>
-              <TableCell align="right"><strong>Email</strong></TableCell>
-              <TableCell align="right"><strong>Phone</strong></TableCell>
-              <TableCell align="right"><strong>Gender</strong></TableCell>
-              <TableCell align="right"><strong>Delete</strong></TableCell>
+          <TableHead >
+            <TableRow >
+              <TableCell  className="text-info" align="right"><strong>Full Name</strong></TableCell>
+              <TableCell className="text-info" align="right"><strong>User Name</strong></TableCell>
+              <TableCell className="text-info" align="right"><strong>Email</strong></TableCell>
+              <TableCell className="text-info" align="right"><strong>Phone</strong></TableCell>
+              <TableCell className="text-info" align="right"><strong>Gender</strong></TableCell>
+              <TableCell className="text-info" align="right"><strong>Action</strong></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {userprofiles &&userprofiles?.map((row) => (
               <TableRow
-                key={row.name}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              key={row.name}
+              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell align="right">{row.fullname}</TableCell>
-                <TableCell align="right">{row.username}</TableCell>
-                <TableCell align="right">{row.email}</TableCell>
-                <TableCell align="right">{row.phone}</TableCell>
-                <TableCell align="right">{row.gender}</TableCell>
-                <TableCell align="right">
+                <TableCell  className="text-success" align="right">{row.fullname}</TableCell>
+                <TableCell  className="text-danger" align="right">{row.username}</TableCell>
+                <TableCell  className="text-primary" align="right">{row.email}</TableCell>
+                <TableCell  className="text-darks" align="right">{row.phone}</TableCell>
+                <TableCell className="text-warning" align="right">{row.gender}</TableCell>
+                <TableCell className="text-dark" align="right">
                   {row?._id && (
                     <Button size="small" onClick={() => handleSubmit(row._id)}>
                       Delete
@@ -119,7 +117,7 @@ export default function DenseTable() {
           onPageChange={handleChangePage}
           rowsPerPage={rowsPerPage}
           onRowsPerPageChange={handleChangeRowsPerPage}
-        />
+          />
       </TableContainer>
     </>
   );
