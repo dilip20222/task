@@ -11,6 +11,7 @@ import TableHead from "@mui/material/TableHead";
 import Button from "@mui/material/Button";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import BasicPopover from "./Imagesavtar";
 import { users } from "../../store/store";
 
 var DATA = {}
@@ -26,7 +27,7 @@ export default function DenseTable() {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState();
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
@@ -82,10 +83,12 @@ export default function DenseTable() {
             <TableRow >
               <TableCell  className="text-info" align="right"><strong>Full Name</strong></TableCell>
               <TableCell className="text-info" align="right"><strong>User Name</strong></TableCell>
+              <TableCell className="text-info" align="right"><strong>Images</strong></TableCell>
               <TableCell className="text-info" align="right"><strong>Email</strong></TableCell>
               <TableCell className="text-info" align="right"><strong>Phone</strong></TableCell>
               <TableCell className="text-info" align="right"><strong>Gender</strong></TableCell>
               <TableCell className="text-info" align="right"><strong>Action</strong></TableCell>
+
             </TableRow>
           </TableHead>
           <TableBody>
@@ -96,6 +99,7 @@ export default function DenseTable() {
               >
                 <TableCell  className="text-success" align="right">{row.fullname}</TableCell>
                 <TableCell  className="text-danger" align="right">{row.username}</TableCell>
+                <TableCell  className="text-danger" align="right"><BasicPopover file={row.file}/> </TableCell>
                 <TableCell  className="text-primary" align="right">{row.email}</TableCell>
                 <TableCell  className="text-darks" align="right">{row.phone}</TableCell>
                 <TableCell className="text-warning" align="right">{row.gender}</TableCell>
