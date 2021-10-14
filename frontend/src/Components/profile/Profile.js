@@ -1,20 +1,17 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux"; 
 import axios from "axios";
-import { addprofile } from "../../store/oneuser/profileAction";
+import { addprofile, getuserprofile } from "../../store/oneuser/profileAction";
 export const Profile = () => {
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
-  const responseData = useSelector((state) => state.profiles?.profile);
+  const responseData = useSelector((state) => state);
   console.log("Profile Data>>>>>>>>>>", responseData);
   
   React.useEffect(() => {
-    axios
-      .get("http://localhost:3000/api/", {headers: { tokens: `${token}`}})
-      .then((res) => {
-        dispatch(addprofile(res.data));
-      });
+    dispatch(getuserprofile())
   }, []);
+  
 
   const image = {
     width: "100px",

@@ -19,8 +19,6 @@ export default function DenseTable() {
   const dispatch = useDispatch();
 
   const userprofiles = useSelector((state) => state?.alluser?.alluser || null);
-  const usercount = useSelector((state)=>  state?.profiles?.counts || null)
-  const paginationdata = useSelector((state) => state?.profiles?.pagesdata?.Users || null);
   
   const [posts, setPosts] = useState([]);
   const [pageInfo, setPageInfo] = useState({})

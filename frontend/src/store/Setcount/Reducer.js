@@ -1,10 +1,14 @@
-import { DASHBOARD_COUNTS } from "./Action";
-const defaultProfile = { counts: null};
+import { types } from "../constant/constant";
+const defaultProfile = { counts: null };
 
-function Setcount(state = defaultProfile, action)
- {
+function Setcount(state = defaultProfile, action) {
   switch (action.type) {
-    case DASHBOARD_COUNTS:
+    case types.GET_DASHBOARD_COUNTS:
+    return {
+      ...state,
+      loading: true,
+    }
+    case types.DASHBOARD_COUNTS:
       return {
         ...state,
         counts: action.counts,

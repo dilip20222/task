@@ -1,8 +1,7 @@
-export const USER_DATA = "USER_DATA";
-
+import { types } from "../constant/constant";
 export function users(alluser) {
   return {
-    type: USER_DATA,
+    type: types.USER_DATA,
     alluser,
   };
 }

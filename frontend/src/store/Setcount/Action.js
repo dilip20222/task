@@ -1,8 +1,14 @@
-export const DASHBOARD_COUNTS = "DASHBOARD_COUNTS";
+import { types } from "../constant/constant"
+
+export function getDashboardCounts() {
+  return {
+    type: types.GET_DASHBOARD_COUNTS
+  }
+}
 
 export function setDashboardCounts(counts) {
   return {
-    type: DASHBOARD_COUNTS,
+    type:types.DASHBOARD_COUNTS,
     counts,
   }
 }

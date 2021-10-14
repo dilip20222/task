@@ -1,8 +1,14 @@
-export const PROFILE_DATA = "PROFILE_DATA";
+import { types } from "../constant/constant";
+
+export function getuserprofile() {
+  return {
+    type: types.GET_PROFILE 
+  }
+}
 
 export function addprofile(profile) {
   return {
-    type: PROFILE_DATA,
+    type:types.PROFILE_DATA,
     profile,
   };
 }
