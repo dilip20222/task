@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import SupervisedUserCircleOutlinedIcon from '@mui/icons-material/SupervisedUserCircleOutlined';
 
 export const Count = ({title, count}) => {

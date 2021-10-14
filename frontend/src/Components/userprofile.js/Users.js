@@ -12,13 +12,13 @@ import Button from "@mui/material/Button";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import BasicPopover from "./Imagesavtar";
-import { users } from "../../store/store";
+import { users } from "../../store/Users/AlluserAction";
 
 var DATA = {}
 export default function DenseTable() {
   const dispatch = useDispatch();
 
-  const userprofiles = useSelector((state) => state?.profiles?.alluser || null);
+  const userprofiles = useSelector((state) => state?.alluser?.alluser || null);
   const usercount = useSelector((state)=>  state?.profiles?.counts || null)
   const paginationdata = useSelector((state) => state?.profiles?.pagesdata?.Users || null);
   

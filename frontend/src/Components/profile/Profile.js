@@ -1,13 +1,11 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux"; 
 import axios from "axios";
-import { addprofile } from "../../store/store";
-import store from '../../store/store';
-
+import { addprofile } from "../../store/oneuser/profileAction";
 export const Profile = () => {
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
-  const responseData = useSelector((state) => state.profiles.profile);
+  const responseData = useSelector((state) => state.profiles?.profile);
   console.log("Profile Data>>>>>>>>>>", responseData);
   
   React.useEffect(() => {

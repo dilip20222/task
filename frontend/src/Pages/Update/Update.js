@@ -9,7 +9,7 @@ import MarkEmailReadIcon from "@mui/icons-material/MarkEmailRead";
 import AddReactionTwoToneIcon from "@mui/icons-material/AddReactionTwoTone";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { addprofile } from "../../store/store";
+import { addprofile } from "../../store/oneuser/profileAction";
 import CustomizedSnackbars from "../../Alert/SuccessSnackbar";
 import ErrorSnackbar from "../../Alert/Error";
 
