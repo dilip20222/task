@@ -1,12 +1,12 @@
 import React from "react";
 import { Redirect } from "react-router";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Dashboard from "./Pages/Dashboard/Dashboard";
+import Dashboard from "./Pages/Dashboard/DashBoard";
 import SignUp from "./Pages/Signup/signup";
 import SignIn from "./Pages/SignIn/SignIn";
-import Update from "./Pages/Update/Update";
 import Users from "./Components/userprofile.js/Users";
 import Layout from "./Components/Layout/Layout";
+import Update from "./Pages/Update/Update";
 
 const PrivateRoute = (props) => {
   console.log("PRIVATE ROUTE: ", props.path);

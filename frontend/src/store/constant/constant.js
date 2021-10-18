@@ -1,4 +1,5 @@
 export const types= {
+    GET_ALLUSER : "GET_ALLUSER",
     RESET : "RESET",
     PROFILE_DATA : "PROFILE_DATA",
     DASHBOARD_COUNTS : "DASHBOARD_COUNTS",

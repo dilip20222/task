@@ -127,7 +127,7 @@ router.post("/login", async (req, res) => {
 
 // Dashboard API
 
-router.get("/", auth, async (req, res) => {
+router.get("/userprofile", auth, async (req, res) => {
   try {
     const result = await Auth2.findById(req.user._id);
     return res.json(result);

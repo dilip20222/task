@@ -1,11 +1,9 @@
 import { types } from "../constant/constant";
-import { PROFILE_DATA } from "./profileAction";
 const defaultProfile = { profile: null};
+
 
 function profiles(state = defaultProfile, action)
  {
-
-  console.log("sagggggggggaaaaaa" , action)
   console.log("action", { action });
   switch (action.type) {
     case types.GET_PROFILE:
@@ -17,6 +15,7 @@ function profiles(state = defaultProfile, action)
       return {
         ...state,
         profile: action.profile,
+        loading: false
       };
     default:
       return state;

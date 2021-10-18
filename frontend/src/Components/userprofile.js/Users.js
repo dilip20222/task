@@ -12,7 +12,7 @@ import Button from "@mui/material/Button";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import BasicPopover from "./Imagesavtar";
-import { users } from "../../store/Users/AlluserAction";
+import { alluser, users } from "../../store/Users/AlluserAction";
 
 var DATA = {}
 export default function DenseTable() {
@@ -36,21 +36,21 @@ export default function DenseTable() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
  
   useEffect(() => {
-    if (DATA[page]) {
-      setPageInfo(DATA[page].info);
-      dispatch(users(DATA[page].users));
+    const alluser1 = dispatch(alluser());  
+    if (alluser1[page]) {
+      setPageInfo(alluser1[page].info);
+      dispatch(users(alluser1[page].users));
       return;
     }
-    axios
-      .get(
-        `http://localhost:3000/api/pages?page=${page}&limit=${rowsPerPage}`
-      )
-      .then((res) => {
-        DATA[page] = res.data;
-        setPageInfo(res.data.info);
-        dispatch(users(res.data.users));
-      });
-
+    // axios
+    //   .get(
+    //     `http://localhost:3000/api/pages?page=${page}&limit=${rowsPerPage}`
+    //   )
+    //   .then((res) => {
+    //     DATA[page] = res.data;
+    //     setPageInfo(res.data.info);
+    //     dispatch(users(res.data.users));
+    //   });
   }, [page, rowsPerPage]);
 
   const handleSubmit = (userId) => {
@@ -86,7 +86,6 @@ export default function DenseTable() {
               <TableCell className="text-info" align="right"><strong>Phone</strong></TableCell>
               <TableCell className="text-info" align="right"><strong>Gender</strong></TableCell>
               <TableCell className="text-info" align="right"><strong>Action</strong></TableCell>
-
             </TableRow>
           </TableHead>
           <TableBody>

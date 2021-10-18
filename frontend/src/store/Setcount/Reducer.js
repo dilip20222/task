@@ -12,6 +12,7 @@ function Setcount(state = defaultProfile, action) {
       return {
         ...state,
         counts: action.counts,
+        loading: false
       };
     default:
       return state;

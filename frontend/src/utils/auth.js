@@ -1,8 +1,10 @@
-const TOKEN_KEY = process.env.REACT_APP_TOKEN_KEY || 'tokens';
+import alluser from "../store/Users/Reducer";
+
+const TOKEN_KEY = 'token';
 
 export const login = (token) => {
     return Promise.resolve().then(() => {
-        localStorage.setItem(TOKEN_KEY, JSON.stringify(token));
+        localStorage.setItem(TOKEN_KEY, token);
     })
 }
 
@@ -21,10 +23,5 @@ export const isLogin = () => {
 
 export const getAuth = () => {
     let auth = localStorage.getItem(TOKEN_KEY);
-    return auth ? JSON.parse(auth) : {};
-}
-
-export const isAdmin = () => {
-    let { role } = getAuth();
-    return role === 'admin'
+    return auth ? auth : null;
 }

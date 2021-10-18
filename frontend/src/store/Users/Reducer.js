@@ -5,6 +5,11 @@ const defaultProfile = { alluser: null };
 function alluser(state = defaultProfile, action) {
 
   switch (action.type) {
+    case types.GET_ALLUSER : 
+    return {
+      ...state , 
+      loadinfg : true
+    }
     case types.USER_DATA:
       return {
         ...state,

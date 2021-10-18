@@ -1,15 +1,15 @@
 import React, {  useState } from "react";
 import { useHistory } from "react-router";
 import axios from "axios";
-import useForm from "../../Cutomhook/Validationhook";
 import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
 import SecurityIcon from '@mui/icons-material/Security';
 import AddReactionTwoToneIcon from '@mui/icons-material/AddReactionTwoTone';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Nav } from "../../Components/Navbar/Nav";
-import validate from "../../Cutomhook/validate";
 import ErrorSnackbar from "../../Alert/Error";
 import CustomizedSnackbars from "../../Alert/SuccessSnackbar";
+import useForm from "../../hooks/Validationhook";
+import validate from "../../hooks/validate";
 
 const SignIn = (props) => {
   

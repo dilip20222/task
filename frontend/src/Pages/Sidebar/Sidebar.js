@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export const Sidebar = () => {
+const Sidebar = () => {
   return (
     <div
       className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark"
@@ -63,3 +63,6 @@ export const Sidebar = () => {
     </div>
   );
 };
+
+
+export default Sidebar;

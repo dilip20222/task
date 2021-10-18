@@ -1,18 +1,18 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux"; 
-import axios from "axios";
-import { addprofile, getuserprofile } from "../../store/oneuser/profileAction";
+import { getuserprofile } from "../../store/oneuser/profileAction";
+
 export const Profile = () => {
-  const token = localStorage.getItem("token");
   const dispatch = useDispatch();
-  const responseData = useSelector((state) => state);
+  const responseData = useSelector((state) => state.profiles?.profile || null);
+  const loading = useSelector((state) => state.profiles?.loading || false);
+  console.log("Loadinnnnnnggggg >>>>>>." , loading)
   console.log("Profile Data>>>>>>>>>>", responseData);
-  
+   
   React.useEffect(() => {
     dispatch(getuserprofile())
   }, []);
   
-
   const image = {
     width: "100px",
     borderRadius: "15px",

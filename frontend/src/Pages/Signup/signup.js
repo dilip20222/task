@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import useForm from "../../Cutomhook/Validationhook";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import ContactPhoneIcon from "@mui/icons-material/ContactPhone";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
@@ -20,6 +19,7 @@ import FormLabel from "@mui/material/FormLabel";
 import ErrorSnackbar from "../../Alert/Error";
 import Successbar from "../../Alert/SuccessSnackbar";
 import { Nav } from "../../Components/Navbar/Nav";
+import useForm from "../../hooks/Validationhook";
 
 const Signup = (props) => {
   const [open, setOpen] = useState(false);

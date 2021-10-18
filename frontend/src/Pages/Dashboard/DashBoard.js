@@ -1,10 +1,10 @@
 import * as React from "react";
 import { useEffect } from "react";
-import { connect, useDispatch, useSelector } from "react-redux";
-import { getDashboardCounts } from "../../store/Setcount/Action";
+import { useDispatch, useSelector } from "react-redux";
 import { Count } from "../../Components/Count/Count";
+import { getDashboardCounts } from "../../store/Setcount/Action";
 
-export default function Dashboard() {
+ function Dashboard() {
   const dispatch = useDispatch();
   const userCount = useSelector((state) => state?.Setcount?.counts || 0);
 
@@ -18,3 +18,5 @@ export default function Dashboard() {
     </>
   );
 }
+
+export default Dashboard;
