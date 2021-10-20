@@ -4,9 +4,10 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Dashboard from "./Pages/Dashboard/DashBoard";
 import SignUp from "./Pages/Signup/signup";
 import SignIn from "./Pages/SignIn/SignIn";
-import Users from "./Components/userprofile.js/Users";
+import Users from "./Pages/Users/Users";
 import Layout from "./Components/Layout/Layout";
-import Update from "./Pages/Update/Update";
+import Update from "./Pages/Profile/Update";
+import AddEdit from './Pages/Users/AddEdit'
 
 const PrivateRoute = (props) => {
   console.log("PRIVATE ROUTE: ", props.path);
@@ -24,6 +25,8 @@ function MainLayout() {
         <Route exact path="/dashboard" component={Dashboard} />
         <Route exact path="/update" component={Update} />
         <Route exact path="/users" component={Users} />
+        <Route exact path="/users/add" component={AddEdit} />
+        <Route exact path="/users/edit/:id" component={AddEdit} />
       </Switch>
     </Layout>
   );

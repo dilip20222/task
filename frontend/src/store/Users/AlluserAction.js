@@ -1,15 +1,24 @@
 import { types } from "../constant/constant";
 
-export function alluser()
+export function alluser(data)
 {
   return {
     type:  types.GET_ALLUSER,
+    data
   }
 }
 
-export function users(alluser) {
+export function setUsers(users, deletedCount) {
+  return {
+    type: types.SET_USERS,
+    users,
+    deletedCount
+  };
+}
+
+export function addUsers(usersPerPage) {
   return {
     type: types.USER_DATA,
-    alluser,
+    usersPerPage,
   };
 }

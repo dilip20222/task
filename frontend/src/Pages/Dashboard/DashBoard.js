@@ -9,8 +9,12 @@ import { getDashboardCounts } from "../../store/Setcount/Action";
   const userCount = useSelector((state) => state?.Setcount?.counts || 0);
 
   useEffect(() => {
-    dispatch(getDashboardCounts())
+    if(!userCount)
+    {
+      dispatch(getDashboardCounts())
+    }
   }, []);
+
 
   return (
     <>

@@ -1,5 +1,5 @@
 import { types } from "../constant/constant";
-const defaultProfile = { profile: null};
+const defaultProfile = { profile: null , loading : true};
 
 
 function profiles(state = defaultProfile, action)
@@ -9,13 +9,12 @@ function profiles(state = defaultProfile, action)
     case types.GET_PROFILE:
       return {
         ...state,
-        loading: true
       };
     case types.PROFILE_DATA:
       return {
         ...state,
         profile: action.profile,
-        loading: false
+        loading: false,
       };
     default:
       return state;

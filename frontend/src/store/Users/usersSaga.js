@@ -1,24 +1,21 @@
 import { call, all, put, takeEvery } from "redux-saga/effects";
 import api from "../../utils/api";
 import { types } from "../constant/constant";
-import { users } from "./AlluserAction";
+import { addUsers } from "./AlluserAction";
 
 
-function fetchprofile() {
-  // baseURL + /userprofile
-  console.log("API CALL")
+function fetchprofile({page, rowsPerPage}) {
   return api
-    .get("/getuser")
+    .get(`/pages?page=${page}&limit=${rowsPerPage}`)
     .then(res=>res.data)
     .catch((error) => {
       throw error;
     });
 }
 
-function* fetchUsers(action) {
-  const user = yield call(fetchprofile);
-  console.log({user});
-  yield put(users(user));
+function* fetchUsers({data}) {
+  const res = yield call(fetchprofile, data);
+  yield put(addUsers({users: res.users, info: res.info}));
 }
 
 function* allusers() {

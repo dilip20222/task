@@ -1,5 +1,3 @@
-import alluser from "../store/Users/Reducer";
-
 const TOKEN_KEY = 'token';
 
 export const login = (token) => {

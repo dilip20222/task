@@ -15,10 +15,7 @@ function fetchprofile() {
 }
 
 function* fetchUsers(action) {
-  console.log('PROFILE ACTION HERE ++++++++++++++++++')
   const user = yield call(fetchprofile);
-  console.log({user});
-  console.log("-=============================")
   yield put(addprofile(user));
 }
 

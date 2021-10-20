@@ -2,6 +2,7 @@ import * as React from "react";
 import { useState , useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import { Link } from 'react-router-dom';
 import TablePagination from "@mui/material/TablePagination";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -11,17 +12,21 @@ import TableHead from "@mui/material/TableHead";
 import Button from "@mui/material/Button";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import BasicPopover from "./Imagesavtar";
-import { alluser, users } from "../../store/Users/AlluserAction";
+import BasicPopover from "../../Components/Imagesavtar";
+import { alluser as getAllUsers, setUsers } from "../../store/Users/AlluserAction";
+import allusers from "../../store/Users/usersSaga";
+
+const getPaginated = (array, {page, limit}) => {
+  let start = page * limit;
+  let end = start + limit;
+  return array.slice(start, end);
+}
 
 var DATA = {}
 export default function DenseTable() {
   const dispatch = useDispatch();
-
-  const userprofiles = useSelector((state) => state?.alluser?.alluser || null);
-  
+  const {alluser = {}, pageInfo, loading} = useSelector((state) => state?.alluser || null)
   const [posts, setPosts] = useState([]);
-  const [pageInfo, setPageInfo] = useState({})
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState();
   const [page, setPage] = React.useState(0);
@@ -34,28 +39,18 @@ export default function DenseTable() {
   
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
- 
+  
   useEffect(() => {
-    const alluser1 = dispatch(alluser());  
-    if (alluser1[page]) {
-      setPageInfo(alluser1[page].info);
-      dispatch(users(alluser1[page].users));
-      return;
+    if(!getPaginated(alluser || [], {page, limit: rowsPerPage}).length) {
+      dispatch(getAllUsers({page, rowsPerPage}));
     }
-    // axios
-    //   .get(
-    //     `http://localhost:3000/api/pages?page=${page}&limit=${rowsPerPage}`
-    //   )
-    //   .then((res) => {
-    //     DATA[page] = res.data;
-    //     setPageInfo(res.data.info);
-    //     dispatch(users(res.data.users));
-    //   });
   }, [page, rowsPerPage]);
 
   const handleSubmit = (userId) => {
     axios.delete(`http://localhost:3000/api/delete/${userId}`).then((res) => {
-      dispatch(users(userprofiles.filter((single) => single._id !== userId)));
+      let newUsers = alluser.filter((single) => single._id !== userId);
+      let deletedCount = alluser.length - newUsers.length;
+      dispatch(setUsers(newUsers, deletedCount));
       console.log(res);
     });
   };
@@ -75,7 +70,7 @@ export default function DenseTable() {
 
   return (
     <>
-      <TableContainer component={Paper}  >
+      {loading ? <h1>loading</h1> : <TableContainer component={Paper}  >
         <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead >
             <TableRow >
@@ -89,7 +84,7 @@ export default function DenseTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {userprofiles &&userprofiles?.map((row) => (
+            {alluser && getPaginated(alluser, {page, limit: rowsPerPage})?.map((row) => (
               <TableRow
               key={row.name}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -106,6 +101,7 @@ export default function DenseTable() {
                       Delete
                     </Button>
                   )}
+                  <Link to={`/users/edit/${row?._id}`}>Edit</Link>
                 </TableCell>
               </TableRow>
             ))}
@@ -119,7 +115,7 @@ export default function DenseTable() {
           rowsPerPage={rowsPerPage}
           onRowsPerPageChange={handleChangeRowsPerPage}
           />
-      </TableContainer>
+      </TableContainer>}
     </>
   );
 }

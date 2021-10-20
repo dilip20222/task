@@ -136,6 +136,15 @@ router.get("/userprofile", auth, async (req, res) => {
   }
 });
 
+router.get("/edituser/:id" , async (req , res) => {
+  try {
+    const result = await Auth2.findById(req.params.id);
+    return res.json(result);
+  } catch (error) {
+    console.log({error : "Data Not Found"})
+  }
+})
+
 router.get("/getuser", async (req, res) => {
   try {
     const result = await Auth2.find();

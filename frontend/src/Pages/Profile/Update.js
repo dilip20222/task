@@ -34,8 +34,6 @@ const Update = (props) => {
     setnotification(false);
   };
 
-  const [file, setFile] = useState("");
-
   const history = useHistory();
   const token = localStorage.getItem("token");
   const onSubmit = (e) => {
@@ -168,21 +166,6 @@ const Update = (props) => {
                 name="phone"
                 value={profile.phone}
                 onChange={onchange}
-              />
-            </div>
-            <div className="col-md-3">
-              <label htmlFor="file" className="form-label">
-                Image : -
-              </label>
-              <input
-                type="file"
-                value={
-                  setProfile.file &&
-                  `http://localhost:3000/uploads/${responseData.file}`
-                }
-                onChange={(e) => setFile(e.target.files[0])}
-                className="form-control"
-                id="file"
               />
             </div>
             <div className="btn">
