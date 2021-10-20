@@ -1,12 +1,11 @@
 import { types } from "../constant/constant";
-const defaultProfile = { counts: null };
+const defaultProfile = { counts: null , loading : true };
 
 function Setcount(state = defaultProfile, action) {
   switch (action.type) {
     case types.GET_DASHBOARD_COUNTS:
     return {
       ...state,
-      loading: true,
     }
     case types.DASHBOARD_COUNTS:
       return {

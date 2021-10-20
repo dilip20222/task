@@ -21,6 +21,9 @@ import { checkboxClasses } from "@mui/material";
 import Logout from "../logout/logout";
 import { Dropdown, Profile } from "../profile/Profile";
 import AddBoxIcon from "@mui/icons-material/AddBox";
+import { createUser } from "../../Pages/Users/AddEdit";
+import AddUser from "../../Pages/adduser/AddUser";
+import { Link } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -174,9 +177,13 @@ export default function Navbar() {
               inputProps={{ "aria-label": "search" }}
             />
           </Search>
-          <div className="p-1 mx-2">
-           Add User <AddBoxIcon />
-          </div>
+
+          <Link to="/users/add">
+            {" "}
+            <div className="p-1 mx-2 text-white">
+              Add User <AddBoxIcon />
+            </div>{" "}
+          </Link>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton

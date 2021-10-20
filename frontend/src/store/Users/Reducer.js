@@ -7,7 +7,6 @@ function alluser(state = defaultProfile, action) {
     case types.GET_ALLUSER:
       return {
         ...state,
-        loading: true,
       };
     case types.SET_USERS:
       return {

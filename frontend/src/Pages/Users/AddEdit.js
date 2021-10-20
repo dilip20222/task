@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
@@ -11,6 +11,7 @@ import AddReactionTwoToneIcon from "@mui/icons-material/AddReactionTwoTone";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import api from "../../utils/api";
 import { alluser } from "../../store/Users/AlluserAction";
+import Successbar from "../../Alert/SuccessSnackbar";
 
 
 const AddEdit = (props) => {
@@ -18,6 +19,8 @@ const AddEdit = (props) => {
     const isUpdate = !!props.match.params.id;
     const paramsId =  props.match.params.id
     const [Data, setData] = useState([])
+    const [open, setOpen] = useState(false);
+
     const users = useSelector((state)=> state.alluser?.alluser || null);
     console.log("_____________+++++DATA+______" , users);
     const dispatch = useDispatch();
@@ -39,29 +42,34 @@ const AddEdit = (props) => {
     }
 
     const updateUser = (e) => {
-        try {
-          // We need to pass the data for the update About which data we have to update
-          api
-            .put(
-              `http://localhost:3000/api/update/${paramsId}`,Data)
-            .then((res) => {
-              dispatch(alluser(res.data))
-            setData(res.data)
-            //   history.push("/users");
-            });
-        } catch (msg) {
-          console.log({ msg: "Not Updated" });
-        }
+            try {
+              api
+                .put(
+                  `update/${paramsId}`,Data)
+                .then((res) => {
+                    setData(res.data)
+                    dispatch(alluser(res.data))
+                    setOpen(true)
+                });
+            } catch (msg) {
+              console.log({ msg: "Not Updated" });
+            }
       };
 
     const createUser = () => {
-        console.log("User CREATED")
+        // axios.post('http://localhost:3000/api/register').then((res)=>{
+        //     console.log("New USer     =========== respoes" , res.data)
+        // }).catch((error)=>console.log({error : "Not Valid Input"}))
     }
     
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(Data);
        return isUpdate ? updateUser(Data) : createUser(Data);
+    }
+
+    const handleClose = (e) => {
+        setOpen(false)
     }
 
     const head = {
@@ -78,6 +86,11 @@ const AddEdit = (props) => {
         <>
          <form onSubmit={handleSubmit}>
              <div>
+                 <Successbar
+              handlerclose={handleClose}
+              open={open}
+              setOpen={setOpen}
+            />
           <div
             className="user"
             style={{
@@ -86,7 +99,6 @@ const AddEdit = (props) => {
               justifyContent: "space-evenly",
             }}
           >
-
             <h1 className="text-center">
               <AddReactionTwoToneIcon className="icons mx-3" />
               Update Profile

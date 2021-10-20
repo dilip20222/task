@@ -86,7 +86,7 @@ router.post("/register", upload.single("file"), async (req, res, next) => {
     console.log("User Token", token);
     res.status(200).json(user);
   } catch (err) {
-    res.status(404).json("Not valid");
+    res.status(400).json("Not valid");
     console.log("Error , not Valid");
     console.log(err);
   }

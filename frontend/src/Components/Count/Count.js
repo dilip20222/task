@@ -1,12 +1,10 @@
 import React from "react";
 import SupervisedUserCircleOutlinedIcon from "@mui/icons-material/SupervisedUserCircleOutlined";
-import { css } from "@emotion/react";
-import ClipLoader from "react-spinners/ClipLoader";
 import { CSpinner } from "@coreui/react";
 import { useSelector } from "react-redux";
 
 export const Count = ({ title, count }) => {
-  const loading = useSelector((state) => state.Setcount?.counts || null);
+  const loading = useSelector((state) => state.Setcount?.loading || null);
   console.log("Count Loading __________", loading);
 
   return (
@@ -24,7 +22,11 @@ export const Count = ({ title, count }) => {
             <SupervisedUserCircleOutlinedIcon /> {title}
           </h1>
           {loading ? (
-            <CSpinner color="danger" className="d-flex align-center" />
+            <div className="spinner">
+              <h6>Please Wait</h6>
+              <hr />
+              <CSpinner color="danger" className="d-flex align-center" />
+            </div>
           ) : (
             <h1 className="my-5 text-white">{count}</h1>
           )}

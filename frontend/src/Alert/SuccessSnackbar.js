@@ -12,7 +12,7 @@ export default function Successbar(props) {
     <Stack spacing={2} sx={{ width: '100%' }}>
       <Snackbar open={props.open} autoHideDuration={2000} onClose={props.handlerclose}>
         <Alert onClose={props.handlerclose} severity="success" sx={{ width: '100%' }}>
-        Successfull ~ Welcome 
+        Successfull
         </Alert>
       </Snackbar>
     </Stack>
