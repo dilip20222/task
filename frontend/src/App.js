@@ -9,6 +9,7 @@ import Layout from "./Components/Layout/Layout";
 import Update from "./Pages/Profile/Update";
 import AddEdit from './Pages/Users/AddEdit'
 import AddUser from "./Pages/adduser/AddUser";
+import AuthError from "./Components/error/Error";
 
 const PrivateRoute = (props) => {
   console.log("PRIVATE ROUTE: ", props.path);
@@ -19,10 +20,20 @@ const PrivateRoute = (props) => {
   );
 };
 
+const ProtectedRoute = ({role = 'admin', ...props}) => {
+  console.log("Protected Route: ", props.path);
+  return JSON.parse(localStorage.getItem('token')).role === role ? (
+    <Route {...props} />
+  ) : (
+    <Redirect to="/PageNotFound" />
+  );
+};
 function MainLayout() {
   return (
     <Layout>
       <Switch>
+
+        <ProtectedRoute exact path="/admin/dashboard" component={Dashboard} role="admin"/>
         <Route exact path="/dashboard" component={Dashboard} />
         <Route exact path="/update" component={Update} />
         <Route exact path="/users" component={Users} />
@@ -38,6 +49,7 @@ function App(props) {
     <Router>
       <Switch>
         <Route exact path="/SignUp" component={SignUp}></Route>
+        <Route exact path="/PageNotFound" component={AuthError}></Route>
         <Route exact path="/SignIn" component={SignIn}></Route>
         <PrivateRoute path="/" component={MainLayout}></PrivateRoute>
       </Switch>

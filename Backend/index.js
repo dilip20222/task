@@ -25,10 +25,6 @@ app.get("/", (req, res) => {
 // Routes
 
 app.use("/api" , require("./src/Route/index"))
-// app.use("/api", require("./src/Route/Register"));
-// app.use("/api", require("./src/Route/Login"));
-// app.use("/api", require("./src/Route/profile"));
-// app.use("/api" , require('./src/Route/updateuser'))
 app.use('/uploads', express.static('uploads'));
 
 app.listen(port, function() {

@@ -32,7 +32,10 @@ export default function DenseTable() {
     alluser = {},
     pageInfo,
     loading,
-  } = useSelector((state) => state?.alluser || null);
+  } = useSelector((state) => state?.alluser  || null);
+  const loginuser = useSelector(state=> state?.profiles?.profile || null)
+   console.log("++++++++++Login User" , loginuser)
+
   const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState();
@@ -43,6 +46,7 @@ export default function DenseTable() {
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+const token = localStorage.getItem('token')
 
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -54,12 +58,12 @@ export default function DenseTable() {
   }, [page, rowsPerPage]);
 
   const handleSubmit = (userId) => {
-    axios.delete(`http://localhost:3000/api/delete/${userId}`).then((res) => {
-      let newUsers = alluser.filter((single) => single._id !== userId);
-      let deletedCount = alluser.length - newUsers.length;
-      dispatch(setUsers(newUsers, deletedCount));
-      console.log(res);
-    });
+      axios.delete(`http://localhost:3000/api/delete/${userId}`).then((res) => {
+        let newUsers = alluser.filter((single) => single._id !== userId);
+        let deletedCount = alluser.length - newUsers.length;
+        dispatch(setUsers(newUsers, deletedCount));
+        console.log(res);
+      })
   };
 
   const handleChangePage = (_, page) => {
@@ -75,6 +79,7 @@ export default function DenseTable() {
     background: "linear-gradient(#444 , #999 , #333)",
   };
 
+  
   return (
     <>
       {loading ? (
@@ -82,8 +87,7 @@ export default function DenseTable() {
           Fetching Data...<CSpinner color="danger" className="d-flex align-center" />
         </div>
       ) : (
-        <div className="alluser" style={{width:"100%"  }}>
-
+        <div className="alluser" style={{width:"100%"}}>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
             <TableHead>
@@ -139,20 +143,24 @@ export default function DenseTable() {
                         {row.gender}
                       </TableCell>
                       <TableCell className="text-dark" align="right">
-                        {row?._id && (
+                        {loginuser?._id !== row?._id && (
                           <Button
-                            className="btn btn-info mx-1"
-                            style={{
-                              border: "2px solid black",
-                              height: "30px",
-                              background: "#555",
-                              color: "#fff",
-                            }}
+                          className="btn btn-info mx-1"
+                          style={{
+                            border: "2px solid black",
+                            height: "30px",
+                            background: "#555",
+                            color: "#fff",
+                          }}
                             onClick={() => handleSubmit(row._id)}
+                            disabled={alluser.token}
                           >
                             Delete
-                          </Button>
-                        )}
+                          </Button> 
+                        )} 
+                        
+                        
+
                         <Button
                           className="btn btn-info mx-1"
                           style={{

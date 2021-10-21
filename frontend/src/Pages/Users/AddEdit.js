@@ -12,85 +12,96 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import api from "../../utils/api";
 import { alluser } from "../../store/Users/AlluserAction";
 import Successbar from "../../Alert/SuccessSnackbar";
-
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const AddEdit = (props) => {
+  const isUpdate = !!props.match.params.id;
 
-    const isUpdate = !!props.match.params.id;
-    const paramsId =  props.match.params.id
-    const [Data, setData] = useState([])
-    const [open, setOpen] = useState(false);
+  const paramsId = props.match.params.id;
+  const [Data, setData] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [file, setfile] = useState("");
 
-    const users = useSelector((state)=> state.alluser?.alluser || null);
-    console.log("_____________+++++DATA+______" , users);
-    const dispatch = useDispatch();
-    const history = useHistory();
+  const users = useSelector((state) => state.alluser?.alluser || null);
+  console.log("_____________+++++DATA+______", users);
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-    const { _id } = useParams();
-  
-    React.useEffect(() => {
-            api.get(`/edituser/${paramsId}`).then((res)=>{
-                setData(res.data)
-                console.log("RESPONSSSSSSSSSSSSSEEE" , res.data)
-            }).catch((error)=>{ 
-                console.log({error : "Data Not Found"});
-            })
-    }, []);
+  const { _id } = useParams();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(Data);
+    return isUpdate ? updateUser(Data) : createUser(Data);
+  };
 
-    const handleInput = (e) => {
-        return setData({...Data, [e.target.name]: e.target.value});
+  React.useEffect(() => {
+    api
+      .get(`/edituser/${paramsId}`)
+      .then((res) => {
+        setData(res.data);
+        console.log("RESPONSSSSSSSSSSSSSEEE", res.data);
+      })
+      .catch((error) => {
+        console.log({ error: "Data Not Found" });
+      });
+  }, []);
+
+  const handleInput = (e) => {
+    return setData({ ...Data, [e.target.name]: e.target.value });
+  };
+
+  const updateUser = (e) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    for (let key in Data) {
+      formData.append(key, Data[key]);
     }
-
-    const updateUser = (e) => {
-            try {
-              api
-                .put(
-                  `update/${paramsId}`,Data)
-                .then((res) => {
-                    setData(res.data)
-                    dispatch(alluser(res.data))
-                    setOpen(true)
-                });
-            } catch (msg) {
-              console.log({ msg: "Not Updated" });
-            }
-      };
-
-    const createUser = () => {
-        // axios.post('http://localhost:3000/api/register').then((res)=>{
-        //     console.log("New USer     =========== respoes" , res.data)
-        // }).catch((error)=>console.log({error : "Not Valid Input"}))
+    try {
+      axios
+        .put(`http://localhost:3000/api/update/${paramsId}`, formData)
+        .then((res) => {
+          setData(res.data);
+          dispatch(alluser(res.data));
+          setOpen(true);
+        });
+     
+    } catch (msg) {
+      console.log({ msg: "Not Updated" });
     }
-    
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(Data);
-       return isUpdate ? updateUser(Data) : createUser(Data);
-    }
+    return formData;
+  };
 
-    const handleClose = (e) => {
-        setOpen(false)
-    }
+  const createUser = () => {
+    // axios.post('http://localhost:3000/api/register').then((res)=>{
+    //     console.log("New USer     =========== respoes" , res.data)
+    // }).catch((error)=>console.log({error : "Not Valid Input"}))
+  };
 
-    const head = {
-        background: "linear-gradient(#444 , #999 , #333)",
-        width: "100%",
-        height: "calc(100vh - 58px)",
-        display: "flex",
-        flexdirection: "column",
-        alignitems: "center",
-        justifyContent: "center",
-      };
+ 
 
-    return (
-        <>
-         <form onSubmit={handleSubmit}>
-             <div>
-                 <Successbar
-              handlerclose={handleClose}
-              open={open}
-              setOpen={setOpen}
-            />
+  const handleClose = (e) => {
+    setOpen(false);
+  };
+
+  const head = {
+    background: "linear-gradient(#444 , #999 , #333)",
+    width: "100%",
+    height: "calc(100vh - 58px)",
+    display: "flex",
+    flexdirection: "column",
+    alignitems: "center",
+    justifyContent: "center",
+  };
+
+  return (
+    <>
+      <form onSubmit={handleSubmit} style={head}>
+        <div>
+          <Successbar
+            handlerclose={handleClose}
+            open={open}
+            setOpen={setOpen}
+          />
           <div
             className="user"
             style={{
@@ -99,10 +110,29 @@ const AddEdit = (props) => {
               justifyContent: "space-evenly",
             }}
           >
-            <h1 className="text-center">
+            <h1 className="text-center my-2">
+              <img
+                src={`http://localhost:3000/uploads/${Data.file}`}
+                style={{
+                  width: "150px",
+                  borderRadius: "40px",
+                  objectFit: "cover",
+                }}
+                alt=""
+              />
               <AddReactionTwoToneIcon className="icons mx-3" />
               Update Profile
             </h1>
+            <div className="btn">
+              <button
+                className="btn btn-success"
+                onClick={() => {
+                  history.push("/users");
+                }}
+              >
+                <ArrowBackIcon /> Back
+              </button>
+            </div>
           </div>
           <hr />
           <div className="row g-3 p-4">
@@ -165,6 +195,31 @@ const AddEdit = (props) => {
                 onChange={handleInput}
               />
             </div>
+            <div className="col-md-3">
+              <label htmlFor="file" className="form-label">
+                Image : -
+              </label>
+              <input
+                type="file"
+                onChange={(e) => setfile(e.target.files[0])}
+                className="form-control"
+                id="file"
+                // required={true}
+              />
+            </div>
+            {/* <div className="col-md-3">
+              <label htmlFor="inputZip" className="form-label">
+                <ContactPhoneIcon /> Image :-
+              </label>
+              <input
+                className="form-control"
+                id="inputCity1"
+                type='file'
+                name="phone"
+                value={Data.file}
+                onChange={(newimage)=>{return newimage}}
+              />
+            </div> */}
             <div className="btn">
               <button className="btn btn-success" onSubmit={handleSubmit}>
                 <CheckCircleIcon /> Update
@@ -172,9 +227,9 @@ const AddEdit = (props) => {
             </div>
           </div>
         </div>
-        </form> 
-        </>
-    )
-}
+      </form>
+    </>
+  );
+};
 
-export default AddEdit
+export default AddEdit;

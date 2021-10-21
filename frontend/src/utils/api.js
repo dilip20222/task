@@ -11,8 +11,8 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-  const authtoken = getAuth();
-  config.headers.tokens = authtoken || null;
+  const { token } = getAuth();
+  config.headers.tokens = token || null;
   return config;
 });
 

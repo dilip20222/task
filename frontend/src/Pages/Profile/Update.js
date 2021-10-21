@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import ContactPhoneIcon from "@mui/icons-material/ContactPhone";
 import ContactsIcon from "@mui/icons-material/Contacts";
@@ -9,23 +9,25 @@ import MarkEmailReadIcon from "@mui/icons-material/MarkEmailRead";
 import AddReactionTwoToneIcon from "@mui/icons-material/AddReactionTwoTone";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { addprofile } from "../../store/oneuser/profileAction";
+import { getuserprofile } from "../../store/oneuser/profileAction";
 import CustomizedSnackbars from "../../Alert/SuccessSnackbar";
 import ErrorSnackbar from "../../Alert/Error";
+import api from "../../utils/api";
 
-const Update = (props) => {  
+const Update = (props) => {
   const dispatch = useDispatch();
-  const user = useSelector(state => state?.profiles?.profile || {});
-  const [profile, setProfile] = useState({})
-  const [open, setOpen] = useState(false);
-  const [input, setInput] = useState({ email: "" });
-  const [notification, setnotification] = useState(false);
-  let [responseData, setResponseData] = React.useState({});
+  const user = useSelector((state) => state?.profiles?.profile || {});
+  const userprofile = useSelector((state)=>state?.profiles?.profile || null)
+  console.log("++++++userprofile++++++++" , userprofile)
+  const [selectedImage, setSelectedImage] = useState();
+  const [Data, setData] = useState("");
   
-  React.useEffect(() => {
-    setProfile(user);
-  }, [user]);
+  const [open, setOpen] = useState(false);
+  const [ files , setFile ] = useState("")
+  const [notification, setnotification] = useState(false);
+  const token = localStorage.getItem("token");
 
+ 
   const handleClose = (reason, event) => {
     if (reason === "clickaway") {
       return;
@@ -34,29 +36,37 @@ const Update = (props) => {
     setnotification(false);
   };
 
+  useEffect(() => {
+    setData(user)
+  }, [user])
+
   const history = useHistory();
-  const token = localStorage.getItem("token");
+  
   const onSubmit = (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append("file", files);
+    for (let key in Data) {
+      formData.append(key, Data[key]);
+    }
+
+
     try {
-      // We need to pass the data for the update About which data we have to update
-      axios
-        .put(
-          `http://localhost:3000/api/update/${profile._id}`,
-          profile,
-          { headers: { tokens: `${token}` } }
-        )
+      api
+        .put(`/update/profile/${Data._id}`,formData)
         .then((res) => {
-          dispatch(addprofile(res.data))
-          history.push("/users");
+          setData(res.data)
+          dispatch(getuserprofile(res.data));
+          setOpen(true);
         });
+     
     } catch (msg) {
       console.log({ msg: "Not Updated" });
     }
   };
 
-  const onchange = (event) => {
-    setProfile({ ...profile, [event.target.name]: event.target.value });
+  const handleInput = (e) => {
+    return setData({ ...Data, [e.target.name]: e.target.value });
   };
 
   const head = {
@@ -68,6 +78,7 @@ const Update = (props) => {
     alignitems: "center",
     justifyContent: "center",
   };
+
   return (
     <>
       <form onSubmit={onSubmit} className="p-4" style={head}>
@@ -83,7 +94,7 @@ const Update = (props) => {
             <img
               style={{ width: "120px", borderRadius: "15px" }}
               src={
-                profile.file && `http://localhost:3000/uploads/${profile.file}`
+                Data.file && `http://localhost:3000/uploads/${Data.file}`
               }
               alt=""
             />
@@ -92,7 +103,12 @@ const Update = (props) => {
               Update Profile
             </h1>
             <div className="btn">
-              <button className="btn btn-success" onClick={()=>{history.push('/dashboard')}}>
+              <button
+                className="btn btn-success"
+                onClick={() => {
+                  history.push("/dashboard");
+                }}
+              >
                 <ArrowBackIcon /> Back
               </button>
             </div>
@@ -119,8 +135,8 @@ const Update = (props) => {
                 placeholder="Enter Your Username"
                 type="text"
                 name="username"
-                value={profile.username}
-                onChange={onchange}
+                value={Data.username}
+                onChange={handleInput}
               />
             </div>
 
@@ -134,8 +150,8 @@ const Update = (props) => {
                 placeholder="Enter Your Fullname"
                 type="text"
                 name="fullname"
-                value={profile.fullname}
-                onChange={onchange}
+                value={Data.fullname}
+                onChange={handleInput}
               />
             </div>
             <div className="col-3">
@@ -148,8 +164,8 @@ const Update = (props) => {
                 placeholder="Enter Your Email"
                 type="email"
                 name="email"
-                value={profile.email}
-                onChange={onchange}
+                value={Data.email}
+                onChange={handleInput}
               />
             </div>
             <div className="col-md-3">
@@ -159,13 +175,22 @@ const Update = (props) => {
               <input
                 className="form-control"
                 placeholder="Enter Your Contact No."
-                //   max="10"
-                //   min="10"
                 id="inputCity1"
                 type="text"
                 name="phone"
-                value={profile.phone}
-                onChange={onchange}
+                value={Data.phone}
+                onChange={handleInput}
+              />
+            </div>
+            <div className="col-md-3">
+              <label htmlFor="file" className="form-label">
+                Image : -
+              </label>
+              <input
+                type="file"
+                onChange={(e) => setFile(e.target.files[0])}
+                className="form-control"
+                id="file"
               />
             </div>
             <div className="btn">

@@ -114,7 +114,6 @@ router.post("/login", async (req, res) => {
         expiresIn: "2h",
       });
 
-      // save user token
       user.token = token;
       console.log("token", token);
       res.status(200).json(user);
@@ -136,14 +135,14 @@ router.get("/userprofile", auth, async (req, res) => {
   }
 });
 
-router.get("/edituser/:id" , async (req , res) => {
+router.get("/edituser/:id", async (req, res) => {
   try {
     const result = await Auth2.findById(req.params.id);
     return res.json(result);
   } catch (error) {
-    console.log({error : "Data Not Found"})
+    console.log({ error: "Data Not Found" });
   }
-})
+});
 
 router.get("/getuser", async (req, res) => {
   try {
@@ -155,24 +154,56 @@ router.get("/getuser", async (req, res) => {
 });
 
 // Update API
-
-router.put("/update/:id", auth, async (req, res) => {
+router.put("/update/:id", upload.single("file"), async (req, res) => {
   if (!(await Auth.findOne({ _id: req.params.id }))) {
     return res.status(400).json("user not found");
   }
+  let payload = {
+    username: req.body.username,
+    fullname: req.body.fullname,
+    email: req.body.email,
+    phone: req.body.phone,
+  }
+  if(req.file && req.file.filename) {
+    payload.file = req.file.filename;
+  }
+
   let updatedUser = await Auth.findByIdAndUpdate(
     { _id: req.params.id },
-    {
-      username: req.body.username,
-      fullname: req.body.fullname,
-      gender: req.body.gender,
-      phone: req.body.phone,
-    },
+    payload,
     { new: true }
   );
   console.log(updatedUser);
   res.status(200).json(updatedUser);
 });
+
+router.put(
+  "/update/profile/:id",
+  auth,
+  upload.single("file"),
+  async (req, res) => {
+    if (!(await Auth.findOne({ _id: req.params.id }))) {
+      return res.status(400).json("user not found");
+    }
+    let payload = {
+      username: req.body.username,
+      fullname: req.body.fullname,
+      email: req.body.email,
+      phone: req.body.phone,
+    }
+    if(req.file && req.file.filename) {
+      payload.file = req.file.filename;
+    }
+
+    let updatedUser = await Auth.findByIdAndUpdate(
+      { _id: req.params.id },
+      payload,
+      { new: true }
+    );
+    console.log(updatedUser);
+    res.status(200).json(updatedUser);
+  }
+);
 
 //  Delete API
 
@@ -189,39 +220,38 @@ router.get("/count", async (req, res) => {
   res.json(count);
 });
 
-const getPageData = ({page = 0, limit = 2}) => {
+const getPageData = ({ page = 0, limit = 2 }) => {
   page = parseInt(page);
-  if(!limit) { limit = 2 };
+  if (!limit) {
+    limit = 2;
+  }
   limit = parseInt(limit);
-  let skip = page === 0 ? 0 : (page) * limit;
-  return {page, limit, skip}
-}
+  let skip = page === 0 ? 0 : page * limit;
+  return { page, limit, skip };
+};
 
-
-
-const getPageInfo = ({count = 0, limit, page}) => {
+const getPageInfo = ({ count = 0, limit, page }) => {
   count = parseInt(count);
   const info = { count };
-  let totalPages = (count / limit) - 1;
-  if(page >= 1) {
+  let totalPages = count / limit - 1;
+  if (page >= 1) {
     info.prev = page - 1;
   }
-  if(page < totalPages) {
-    info.next = page + 1
+  if (page < totalPages) {
+    info.next = page + 1;
   }
   return info;
-} 
+};
 
 router.get("/pages", async (req, res, next) => {
   // skip = page - 1 * limit
   try {
     let { page, limit, skip } = getPageData(req.query);
-    
-    
+
     const count = await Auth.countDocuments();
     const users = await Auth.find().skip(skip).limit(limit);
-    const info = getPageInfo({count, limit, page});
-    
+    const info = getPageInfo({ count, limit, page });
+
     res.send({
       info,
       users,
@@ -232,4 +262,3 @@ router.get("/pages", async (req, res, next) => {
 });
 
 module.exports = router;
-

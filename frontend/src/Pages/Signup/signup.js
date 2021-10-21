@@ -57,7 +57,6 @@ const Signup = (props) => {
         if (token) {
           history.push("/dashboard");
         }
-
         setOpen(true);
         console.log("Response", res);
       })

@@ -1,8 +1,8 @@
 const TOKEN_KEY = 'token';
 
-export const login = (token) => {
+export const login = (value) => {
     return Promise.resolve().then(() => {
-        localStorage.setItem(TOKEN_KEY, token);
+        localStorage.setItem(TOKEN_KEY, JSON.stringify(value));
     })
 }
 
@@ -20,6 +20,6 @@ export const isLogin = () => {
 }
 
 export const getAuth = () => {
-    let auth = localStorage.getItem(TOKEN_KEY);
+    let auth = JSON.parse(localStorage.getItem(TOKEN_KEY));
     return auth ? auth : null;
 }

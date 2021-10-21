@@ -38,10 +38,12 @@ const SignIn = (props) => {
         axios
         .post("http://localhost:3000/api/login", { ...inputs })
         .then((res) => {
-          const {token} = res.data
-          localStorage.setItem('token', token);
-          console.log("User : ", res);
-          console.log("Status :", res.status);
+          const {token, role} = res.data;
+          localStorage.setItem('token', JSON.stringify({token, role}));
+          if(role === 'admin') {
+            history.push('/admin/dashboard')
+            return setOpen(true);
+          }
           history.push('/dashboard') ;
           setOpen(true)
         });
